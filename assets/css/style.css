@@ -5,16 +5,18 @@ font-family: 'Roboto Mono', monospace; */
 }
 
 html {
+  overflow: hidden;
 }
 
 body {
   color: white;
   background-color: black;
   font-family: "Alumni Sans", sans-serif;
+  font-size: 175%;
 }
 
 #title {
-  font-size: 500%;
+  font-size: 400% !important;
 }
 
 .switch-func {
@@ -41,5 +43,25 @@ body {
   position: absolute;
 }
 
+.btn-style {
+  color: aliceblue;
+  border-color: #282aa7;
+}
+
+.btn-style:hover {
+  background-color: #282aa7;
+  color: aliceblue;
+}
+
 #search-bar {
+  position: absolute;
+  margin-bottom: 2rem;
+}
+
+.carousel-indicators {
+  margin-bottom: 7rem;
+}
+
+.blurb p {
+  margin-bottom: 9rem;
 }

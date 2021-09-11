@@ -44,7 +44,7 @@
       class="carousel slide"
       data-bs-ride="carousel"
     >
-      <div class="carousel-indicators">
+      <div class="carousel-indicators mb-10">
         <button
           type="button"
           data-bs-target="#carouselExampleCaptions"
@@ -145,22 +145,25 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
+
+      <form id="search-bar" class="d-flex mx-auto">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-style btn-outline-primary" type="submit">
+          Search
+        </button>
+      </form>
     </div>
 
-    <nav class="navbar navbar-dark bg-dark d-flex align-items-center">
-      <div class="container-fluid">
-        <form class="d-flex">
-          <input
-            id="search-bar"
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
+    <!-- <nav class="navbar navbar-dark bg-dark d-flex align-items-center">
+      <div class="container-fluid w-100"> -->
+
+    <!-- </div>
+    </nav> -->
 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
