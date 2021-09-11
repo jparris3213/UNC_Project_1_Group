@@ -1,12 +1,45 @@
+/* font-family: 'Alumni Sans', sans-serif;
+font-family: 'Roboto Mono', monospace; */
+
 :root {
 }
 
+html {
+}
+
 body {
+  color: white;
+  background-color: black;
+  font-family: "Alumni Sans", sans-serif;
+}
+
+#title {
+  font-size: 500%;
+}
+
+.switch-func {
   background-color: white;
   color: black;
 }
 
-.switch-func {
-  background-color: black;
-  color: white;
+.carousel {
+  display: flex;
+  width: 100vw;
+  height: 75vh;
+  overflow: hidden;
+  position: relative;
+  align-content: center;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.carousel img {
+  object-fit: cover;
+}
+
+.blurb {
+  position: absolute;
+}
+
+#search-bar {
 }
