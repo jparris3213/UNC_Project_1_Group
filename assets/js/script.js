@@ -6,21 +6,27 @@ function astoroidSection (){
 
     container.append(headerAstoroid);
 
-    var tableAstoroid = $("<table class=">");
+    var tableAstoroid = $("<table class='table table-dark table-striped'>");
+
+    var tHeadAstoroid = $("<thead>");
 
     var headerAstoroidTable = $("<tr>");
 
-    headerAstoroidTable.append("<th>Astoroid Name</th>");
+    headerAstoroidTable.append("<th scope='col'>Astoroid Name</th>");
 
-    headerAstoroidTable.append("<th>Size</th>");
+    headerAstoroidTable.append("<th scope='col'>Size</th>");
 
-    headerAstoroidTable.append("<th>Miss Distance</th>");
+    headerAstoroidTable.append("<th scope='col'>Miss Distance</th>");
 
-    tableAstoroid.append(headerAstoroidTable);
+    tHeadAstoroid.append(headerAstoroidTable);
+
+    tableAstoroid.append(tHeadAstoroid);
+
+    var tBodyAstoroid = $("<tbody>");
 
     for( var i = 0; i < 3/*TODO:lenght of array*/; i++){
 
-        var row = $("<tr>");
+        var row = $("<tr scope='row'>");
 
         row.append("<td>"+ /*TODO:*/"astoroid name" +"</td>");
 
@@ -28,8 +34,10 @@ function astoroidSection (){
 
         row.append("<td>"+ /*TODO:*/"miss distance" +"</td>");
 
-    tableAstoroid.append(row);
+    tBodyAstoroid.append(row);
 };
+
+tableAstoroid.append(tBodyAstoroid);
 
 container.append(tableAstoroid);
 
@@ -41,7 +49,9 @@ function ISSSection (){
 
     container.append(headerISS)
 
-    var tableISS = $("<table>");
+    var tableISS = $("<table class='table table-dark table-striped'>");
+
+    var tHeadISS = $("<thead>");
 
     var headerISSTable = $("<tr>");
 
@@ -53,7 +63,11 @@ function ISSSection (){
 
     headerISSTable.append("<th>Angle off Horizon</th>");
 
-    tableISS.append(headerISSTable);
+    tHeadISS.append(headerISSTable);
+
+    tableISS.append(tHeadISS);
+
+    var tBodyISS = $("<tbody>");
 
     var ISSrow = $("<tr>");
 
@@ -65,7 +79,9 @@ function ISSSection (){
 
         ISSrow.append("<td>"+ /*TODO:*/"up" +"</td>");
 
-    tableISS.append(ISSrow);
+    tBodyISS.append(ISSrow);
+
+    tableISS.append(tBodyISS);
 
     container.append(tableISS);
 
@@ -77,6 +93,7 @@ function init(){
 };
 
 init();
+
 var lightSwitch = $('#light-switch')
 
 
