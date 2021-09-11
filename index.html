@@ -11,14 +11,156 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@100&family=Roboto+Mono:wght@100&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>new webpage</title>
   </head>
 
   <body>
-    <header></header>
-    <div id="container"></div>
+    <header>
+      <h1 id="title" class="website-title text-center">
+        Astronomical Guidance
+      </h1>
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="flexSwitchCheckChecked"
+          checked
+        />
+        <label class="form-check-label" for="flexSwitchCheckChecked"
+          >Light/Dark Mode</label
+        >
+      </div>
+    </header>
+
+    <div
+      id="carouselExampleCaptions"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            id="img-one"
+            src="https://apod.nasa.gov/apod/image/2109/LastRingPortrait_Cassini_1080.jpg"
+            class="d-block w-100"
+            alt="..."
+          />
+          <div class="blurb carousel-caption d-none d-md-block">
+            <h5>Saturn at Night</h5>
+            <p>
+              Still bright in planet Earth's night skies, good telescopic views
+              of Saturn and its beautiful rings often make it a star at star
+              parties. But this stunning view of Saturn's rings and night side
+              just isn't possible from telescopes closer to the Sun than the
+              outer planet. They can only bring Saturn's day into view. In fact,
+              this image of Saturn's slender sunlit crescent with night's shadow
+              cast across its broad and complex ring system was captured by the
+              Cassini spacecraft.
+            </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            id="img-two"
+            src="https://apod.nasa.gov/apod/image/2109/M31WideField_Ziegenbalg_960_annotated.jpg"
+            class="d-block w-100"
+            alt="..."
+          />
+          <div class="blurb carousel-caption d-none d-md-block">
+            <h5>The Deep Sky Toward Andromeda</h5>
+            <p>
+              What surrounds the Andromeda galaxy? Out in space, Andromeda (M31)
+              is closely surrounded by several small satellite galaxies, and
+              further out it is part of the Local Group of Galaxies -- of which
+              our Milky Way galaxy is also a member. On the sky, however, gas
+              clouds local to our Milky Way appear to surround M31 -- not unlike
+              how water clouds in Earth's atmosphere may appear to encompass our
+              Moon.
+            </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            id="img-three"
+            src="https://apod.nasa.gov/apod/image/2109/M16SHO_1024.jpg"
+            class="d-block w-100"
+            alt="..."
+          />
+          <div class="blurb carousel-caption d-none d-md-block">
+            <h5>M16 Close Up</h5>
+            <p>
+              A star cluster around 2 million years young surrounded by natal
+              clouds of dust and glowing gas, M16 is also known as The Eagle
+              Nebula. This beautifully detailed image of the region adopts the
+              colorful Hubble palette and includes cosmic sculptures made famous
+              in Hubble Space Telescope close-ups of the starforming complex.
+            </p>
+          </div>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <nav class="navbar navbar-dark bg-dark d-flex align-items-center">
+      <div class="container-fluid">
+        <form class="d-flex">
+          <input
+            id="search-bar"
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
