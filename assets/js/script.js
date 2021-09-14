@@ -1,4 +1,26 @@
 var container = $("#container");
+var areaCode;
+var lat;
+var long;
+
+$("#search").click(function(){
+    areaCode = $("#areacode").val();
+    areaUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + areaCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
+    fetch(areaUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow',
+        })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+                console.log(data);
+                lat = data.lat;
+                long = data.lon;
+                console.log(areaCode, lat, long)
+        });
+});
 
 function astoroidSection (){
 
