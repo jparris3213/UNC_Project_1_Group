@@ -1,4 +1,4 @@
-var container = $("#container");
+var container = $("#info-table");
 var areaCode;
 var lat;
 var long;
