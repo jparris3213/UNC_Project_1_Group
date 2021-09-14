@@ -130,41 +130,41 @@ var desEl2 = document.getElementById("desc-two");
 var desEl3 = document.getElementById("desc-three");
 
 
-function getApiImages(){
-  fetch(requestUrl, {
-  method: 'GET',
-  credentials: 'same-origin',
-  redirect: 'follow',
-  })
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    console.log(data);
-      var imageURL = data[0].url;
-      var alt = data[0].title;
-      var desc = data[0].explanation;
-      image1El.src = imageURL;
-      image1El.setAttribute("alt", alt);
-      title1.innerText = alt;
-      desEl1.innerText = desc;
+function getApiImages() {
+    fetch(requestUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow',
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            var imageURL = data[0].url;
+            var alt = data[0].title;
+            var desc = data[0].explanation;
+            image1El.src = imageURL;
+            image1El.setAttribute("alt", alt);
+            title1.innerText = alt;
+            desEl1.innerText = desc;
 
-      var imageURL = data[1].url;
-      var alt = data[1].title;
-      var desc = data[1].explanation;
-      image2El.src = imageURL;
-      image2El.setAttribute("alt", alt);
-      title2.innerText = alt;
-      desEl2.innerText = desc;
+            var imageURL = data[1].url;
+            var alt = data[1].title;
+            var desc = data[1].explanation;
+            image2El.src = imageURL;
+            image2El.setAttribute("alt", alt);
+            title2.innerText = alt;
+            desEl2.innerText = desc;
 
-      var imageURL = data[2].url;
-      var alt = data[2].title;
-      var desc = data[2].explanation;
-      image3El.src = imageURL;
-      image3El.setAttribute("alt", alt);
-      title3.innerText = alt;
-      desEl3.innerText = desc;
-  });
+            var imageURL = data[2].url;
+            var alt = data[2].title;
+            var desc = data[2].explanation;
+            image3El.src = imageURL;
+            image3El.setAttribute("alt", alt);
+            title3.innerText = alt;
+            desEl3.innerText = desc;
+        });
 }
 
 getApiImages();
@@ -174,7 +174,8 @@ var lightSwitch = $('#light-switch')
 
 
 
-$('#light-switch').on('click', function (e) {
+$('#flexSwitchCheckChecked').on('click', function (e) {
+    console.log('heygirlhey')
     var body = $('body');
     body.addClass.toggle("switch-func")
 });
