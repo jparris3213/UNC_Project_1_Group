@@ -1,7 +1,7 @@
 //DOM Selectors
 
 var container = $("#info-table");
-var areaCode;
+var zipCode;
 var lat;
 var long;
 
@@ -33,10 +33,10 @@ $('#flexSwitchCheckChecked').on('click', function (e) {
 //Search button event listener
 $("#search").click(function (event) {
     event.preventDefault();
-    areaCode = $("#areacode").val();
-    areaUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + areaCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
-    fetch(areaUrl, {
-        method: 'GET',
+    zipCode = $("#zipcode").val();
+    zipUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + zipCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
+    fetch(zipUrl, {
+        method: 'GET', areacode
         credentials: 'same-origin',
         redirect: 'follow',
     })
@@ -47,7 +47,7 @@ $("#search").click(function (event) {
             console.log(data);
             lat = data.lat;
             long = data.lon;
-            console.log(areaCode, lat, long)
+            console.log(zipCode, lat, long)
         });
 });
 
