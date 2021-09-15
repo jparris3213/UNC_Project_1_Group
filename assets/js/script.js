@@ -1,10 +1,16 @@
+//DOM Selectors
+
 var container = $("#info-table");
 var areaCode = document.getElementById("areacode");
 var submitEl = document.getElementById("submit");
 var lat;
 var long;
 
-//----------------------------------------------------------------------------------------------------------------
+//Toggle light/dark mode variables
+var body = $('body');
+var lightSwitch = $('#light-switch')
+
+//Picture API call variables
 var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
 var image1El = document.getElementById("img-one");
 var image2El = document.getElementById("img-two");
@@ -26,8 +32,25 @@ $("#search").click(function(event){
     //console.log(areaCode);
     var areaUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + areaCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
     fetch(areaUrl)
+})
+//Toggle light/dark mode event listener
+$('#flexSwitchCheckChecked').on('click', function (e) {
+
+
+});
+
+
+//Search button event listener
+$("#search").click(function () {
+    areaCode = $("#areacode").val();
+    areaUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + areaCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
+    fetch(areaUrl, {
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow',
+    })
         .then(function (response) {
-          return response.json();
+            return response.json();
         })
         .then(function (data) {
             console.log(data);
@@ -43,99 +66,10 @@ var useCoordinates = function(lat, long) {
 }
 
 function astoroidSection (){
-
-    var headerAstoroid = $("<header>Astoroids Near You</header>");
-
-    container.append(headerAstoroid);
-
-    var tableAstoroid = $("<table class='table table-dark table-striped'>");
-
-    var tHeadAstoroid = $("<thead>");
-
-    var headerAstoroidTable = $("<tr>");
-
-    headerAstoroidTable.append("<th scope='col'>Astoroid Name</th>");
-
-    headerAstoroidTable.append("<th scope='col'>Size</th>");
-
-    headerAstoroidTable.append("<th scope='col'>Miss Distance</th>");
-
-    tHeadAstoroid.append(headerAstoroidTable);
-
-    tableAstoroid.append(tHeadAstoroid);
-
-    var tBodyAstoroid = $("<tbody>");
-
-    for( var i = 0; i < 3/*TODO:lenght of array*/; i++){
-
-        var row = $("<tr scope='row'>");
-
-        row.append("<td>"+ /*TODO:*/"astoroid name" +"</td>");
-
-        row.append("<td>"+ /*TODO:*/"size" + "</td>");
-
-        row.append("<td>"+ /*TODO:*/"miss distance" +"</td>");
-
-    tBodyAstoroid.append(row);
+            console.log(areaCode, lat, long)
 };
 
-tableAstoroid.append(tBodyAstoroid);
-
-container.append(tableAstoroid);
-
-};
-
-function ISSSection (){
-
-    var headerISS = $("<header>ISS</header>");
-
-    container.append(headerISS)
-
-    var tableISS = $("<table class='table table-dark table-striped'>");
-
-    var tHeadISS = $("<thead>");
-
-    var headerISSTable = $("<tr>");
-
-    headerISSTable.append("<th>Next Time in View</th>");
-
-    headerISSTable.append("<th>Is It Visable</th>");
-
-    headerISSTable.append("<th>digrees from North</th>");
-
-    headerISSTable.append("<th>Angle off Horizon</th>");
-
-    tHeadISS.append(headerISSTable);
-
-    tableISS.append(tHeadISS);
-
-    var tBodyISS = $("<tbody>");
-
-    var ISSrow = $("<tr>");
-
-        ISSrow.append("<td>"+ /*TODO:*/"next time" +"</td>");
-
-        ISSrow.append("<td>"+ /*TODO:*/"visable?" + "</td>");
-
-        ISSrow.append("<td>"+ /*TODO:*/"north" +"</td>");
-
-        ISSrow.append("<td>"+ /*TODO:*/"up" +"</td>");
-
-    tBodyISS.append(ISSrow);
-
-    tableISS.append(tBodyISS);
-
-    container.append(tableISS);
-
-};
-
-function init(){
-    astoroidSection();
-    ISSSection();
-};
-
-init();
-
+//API call to retrieve images from NASA API call
 function getApiImages() {
     fetch(requestUrl, {
         method: 'GET',
@@ -174,10 +108,102 @@ function getApiImages() {
 }
 
 getApiImages();
-var lightSwitch = $('#light-switch')
 
-$('#flexSwitchCheckChecked').on('click', function (e) {
-    console.log('heygirlhey')
-    var body = $('body');
-    body.addClass.toggle("switch-func")
-});
+
+//Asteroid table
+function astoroidSection() {
+
+    var headerAstoroid = $("<header>Astoroids Near You</header>");
+
+    container.append(headerAstoroid);
+
+    var tableAstoroid = $("<table class='table table-dark table-striped'>");
+
+    var tHeadAstoroid = $("<thead>");
+
+    var headerAstoroidTable = $("<tr>");
+
+    headerAstoroidTable.append("<th scope='col'>Astoroid Name</th>");
+
+    headerAstoroidTable.append("<th scope='col'>Size</th>");
+
+    headerAstoroidTable.append("<th scope='col'>Miss Distance</th>");
+
+    tHeadAstoroid.append(headerAstoroidTable);
+
+    tableAstoroid.append(tHeadAstoroid);
+
+    var tBodyAstoroid = $("<tbody>");
+
+    for (var i = 0; i < 3/*TODO:lenght of array*/; i++) {
+
+        var row = $("<tr scope='row'>");
+
+        row.append("<td>" + /*TODO:*/"astoroid name" + "</td>");
+
+        row.append("<td>" + /*TODO:*/"size" + "</td>");
+
+        row.append("<td>" + /*TODO:*/"miss distance" + "</td>");
+
+        tBodyAstoroid.append(row);
+    };
+
+    tableAstoroid.append(tBodyAstoroid);
+
+    container.append(tableAstoroid);
+
+};
+
+//ISS Satellite Table
+function ISSSection() {
+
+    var headerISS = $("<header>ISS</header>");
+
+    container.append(headerISS)
+
+    var tableISS = $("<table class='table table-dark table-striped'>");
+
+    var tHeadISS = $("<thead>");
+
+    var headerISSTable = $("<tr>");
+
+    headerISSTable.append("<th>Next Time in View</th>");
+
+    headerISSTable.append("<th>Is It Visable</th>");
+
+    headerISSTable.append("<th>digrees from North</th>");
+
+    headerISSTable.append("<th>Angle off Horizon</th>");
+
+    tHeadISS.append(headerISSTable);
+
+    tableISS.append(tHeadISS);
+
+    var tBodyISS = $("<tbody>");
+
+    var ISSrow = $("<tr>");
+
+    ISSrow.append("<td>" + /*TODO:*/"next time" + "</td>");
+
+    ISSrow.append("<td>" + /*TODO:*/"visable?" + "</td>");
+
+    ISSrow.append("<td>" + /*TODO:*/"north" + "</td>");
+
+    ISSrow.append("<td>" + /*TODO:*/"up" + "</td>");
+
+    tBodyISS.append(ISSrow);
+
+    tableISS.append(tBodyISS);
+
+    container.append(tableISS);
+
+};
+
+
+function init() {
+    astoroidSection();
+    ISSSection();
+};
+
+init();
+
