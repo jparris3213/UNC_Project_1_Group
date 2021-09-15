@@ -1,26 +1,46 @@
 var container = $("#info-table");
-var areaCode;
+var areaCode = document.getElementById("areacode");
+var submitEl = document.getElementById("submit");
 var lat;
 var long;
 
-$("#search").click(function(){
+//----------------------------------------------------------------------------------------------------------------
+var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
+var image1El = document.getElementById("img-one");
+var image2El = document.getElementById("img-two");
+var image3El = document.getElementById("img-three");
+
+var title1 = document.getElementById("img-one-title");
+var title2 = document.getElementById("img-two-title");
+var title3 = document.getElementById("img-three-title");
+
+var desEl1 = document.getElementById("desc-one");
+var desEl2 = document.getElementById("desc-two");
+var desEl3 = document.getElementById("desc-three");
+//----------------------------------------------------------------------------------------------------------------
+
+$("#search").click(function(event){
+    event.preventDefault();
+
     areaCode = $("#areacode").val();
-    areaUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + areaCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
-    fetch(areaUrl, {
-        method: 'GET',
-        credentials: 'same-origin',
-        redirect: 'follow',
-        })
+    //console.log(areaCode);
+    var areaUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + areaCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
+    fetch(areaUrl)
         .then(function (response) {
           return response.json();
         })
         .then(function (data) {
-                console.log(data);
-                lat = data.lat;
-                long = data.lon;
-                console.log(areaCode, lat, long)
+            console.log(data);
+            lat = data.lat;
+            long = data.lon;
+            console.log(areaCode, lat, long);
+            useCoordinates(lat,long);
         });
 });
+
+var useCoordinates = function(lat, long) {
+    console.log(lat + " " + long);
+}
 
 function astoroidSection (){
 
@@ -116,20 +136,6 @@ function init(){
 
 init();
 
-var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
-var image1El = document.getElementById("img-one");
-var image2El = document.getElementById("img-two");
-var image3El = document.getElementById("img-three");
-
-var title1 = document.getElementById("img-one-title");
-var title2 = document.getElementById("img-two-title");
-var title3 = document.getElementById("img-three-title");
-
-var desEl1 = document.getElementById("desc-one");
-var desEl2 = document.getElementById("desc-two");
-var desEl3 = document.getElementById("desc-three");
-
-
 function getApiImages() {
     fetch(requestUrl, {
         method: 'GET',
@@ -170,13 +176,8 @@ function getApiImages() {
 getApiImages();
 var lightSwitch = $('#light-switch')
 
-
-
-
-
 $('#flexSwitchCheckChecked').on('click', function (e) {
     console.log('heygirlhey')
     var body = $('body');
     body.addClass.toggle("switch-func")
 });
-
