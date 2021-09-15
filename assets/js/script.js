@@ -84,9 +84,8 @@ function chickenLittle () {
 
 chickenLittle();
 
-function astoroidSection () {};
-//API call to retrieve images from NASA API call
 
+//API call to retrieve images from NASA API call
 function getApiImages() {
     fetch(requestUrl, {
         method: 'GET',
