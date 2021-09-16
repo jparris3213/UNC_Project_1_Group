@@ -145,6 +145,8 @@ function astoroidSection() {
 
     headerAstoroidTable.append("<th scope='col'>Miss Distance</th>");
 
+    headerAstoroidTable.append("<th scope='col'></th>")
+
     tHeadAstoroid.append(headerAstoroidTable);
 
     tableAstoroid.append(tHeadAstoroid);
@@ -160,6 +162,8 @@ function astoroidSection() {
         row.append("<td id='asteroid_size_" + i + "'>"+" Meters" + "</td>");
 
         row.append("<td id='asteroid_miss_" + i + "'>"+ /*TODO:*/"miss distance" +"</td>");
+
+        row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>")
 
         tBodyAstoroid.append(row);
     };
