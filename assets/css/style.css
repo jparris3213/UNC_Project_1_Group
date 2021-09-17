@@ -4,15 +4,17 @@ font-family: 'Roboto Mono', monospace; */
 :root {
 }
 
-html {
-  /* overflow: hidden; */
+body {
+  font-family: "Alumni Sans", sans-serif;
+  font-size: 20px;
 }
 
-body {
+.dark-mode {
   color: white;
   background-color: black;
-  font-family: "Alumni Sans", sans-serif;
-  font-size: 175%;
+}
+
+.light-mode {
 }
 
 #title {
@@ -66,4 +68,18 @@ body {
 
 .blurb p {
   margin-bottom: 9rem;
+}
+
+.picture-title {
+  font-size: 250%;
+  background-color: black;
+  opacity: 70%;
+  border-radius: 5px;
+}
+
+.picture-desc {
+  font-size: 125%;
+  background-color: black;
+  opacity: 70%;
+  border-radius: 5px;
 }

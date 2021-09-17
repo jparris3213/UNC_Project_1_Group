@@ -21,7 +21,7 @@
     <title>new webpage</title>
   </head>
 
-  <body class="light-mode || dark-mode">
+  <body class="dark-mode">
     <header>
       <h1 id="title" class="website-title text-center">
         Astronomical Guidance
@@ -66,29 +66,9 @@
           aria-label="Slide 3"
         ></button>
       </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img id="img-one" src="" class="d-block w-100" alt="..." />
-          <div class="blurb carousel-caption d-none d-md-block">
-            <h5 id="img-one-title"></h5>
-            <p id="desc-one"></p> 
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img id="img-two" src="" class="d-block w-100" alt="..." />
-          <div class="blurb carousel-caption d-none d-md-block">
-            <h5 id="img-two-title"></h5>
-            <p id="desc-two"></p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img id="img-three" src="" class="d-block w-100" alt="..." />
-          <div class="blurb carousel-caption d-none d-md-block">
-            <h5 id="img-three-title"></h5>
-            <p id="desc-three"></p>
-          </div>
-        </div>
-      </div>
+
+      <div id="carousel-container" class="carousel-inner"></div>
+
       <button
         class="carousel-control-prev"
         type="button"
@@ -116,16 +96,12 @@
           aria-label="Search"
           id="zipcode"
         />
-        <button
-          class="btn btn-style btn-outline-primary"
-          type="submit"
-          id="search"
-        >
+        <button class="btn btn-style btn-outline-primary" type="submit" id="search">
           Search
         </button>
       </form>
     </div>
-    <div id="info-table"></div>
+    <div id="info-table" class="hidden"></div>
     <!-- <nav class="navbar navbar-dark bg-dark d-flex align-items-center">
       <div class="container-fluid w-100"> -->
 
