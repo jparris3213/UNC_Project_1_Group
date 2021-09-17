@@ -9,22 +9,25 @@ var long;
 
 //Toggle light/dark mode variables
 var body = $('body');
-var lightSwitch = $('#light-switch')
+var lightSwitch = $('#flexSwitchCheckChecked')
 
-//Picture API call variables
-var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
-var image1El = document.getElementById("img-one");
-var image2El = document.getElementById("img-two");
-var image3El = document.getElementById("img-three");
 
-var title1 = document.getElementById("img-one-title");
-var title2 = document.getElementById("img-two-title");
-var title3 = document.getElementById("img-three-title");
 
-var desEl1 = document.getElementById("desc-one");
-var desEl2 = document.getElementById("desc-two");
-var desEl3 = document.getElementById("desc-three");
-//----------------------------------------------------------------------------------------------------------------
+
+//Toggle light/dark mode event listener
+lightSwitch.on('click', function (e) {
+    var toggleMode = e.target.checked;
+
+    if (!toggleMode) {
+        body.removeClass('dark-mode');
+        body.addClass('light-mode');
+    } else {
+        body.removeClass('light-mode');
+        body.addClass('dark-mode');
+    }
+});
+
+
 //Search button event listener
 $("#search").click(function (event) {
     event.preventDefault();
@@ -43,58 +46,61 @@ $("#search").click(function (event) {
             lat = data.lat;
             long = data.lon;
             console.log(areaCode, lat, long);
-            useCoordinates(lat,long);
+            useCoordinates(lat, long);
         });
 });
 
+//Picture API call variables
+var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
+var carouselImgContainer = $("#carousel-container");
 //gets the sunrise and sunset information and stores it in data
-var useCoordinates = function(lat, long) {
+var useCoordinates = function (lat, long) {
     //console.log(lat + " " + long);
     var issAPI = "https://satellites.fly.dev/passes/25544?lat=" + lat + "&lon=" + long + "&limit=100&days=7&visible_only=true";
     console.log(issAPI);
     fetch(issAPI)
-    .then(function(response){
-        if(response.ok) {
-            response.json()
-            .then(function(data){
-                console.log(data);
-                $(".issSection").remove(); //removes previous table information
-                ISSSection(data);          //sets up the table with the data provided
-            })
-        }
-    })
+        .then(function (response) {
+            if (response.ok) {
+                response.json()
+                    .then(function (data) {
+                        console.log(data);
+                        $(".issSection").remove(); //removes previous table information
+                        ISSSection(data);          //sets up the table with the data provided
+                    })
+            }
+        })
 }
 
-function astoroidSection (){
-            console.log(areaCode, lat, long)
+function astoroidSection() {
+    console.log(areaCode, lat, long)
 };
 
 //NASA Near Earth Object API
 
-function chickenLittle () {
-  var today = moment().format('YYYY-MM-DD');
-  var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" +  today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
-  fetch(neoAPI, {
-    method: 'GET',
-    credentials: 'same-origin',
-    redirect: 'follow'
-  })
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-      var neos = data['near_earth_objects'][today];
+function chickenLittle() {
+    var today = moment().format('YYYY-MM-DD');
+    var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
+    fetch(neoAPI, {
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow'
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            var neos = data['near_earth_objects'][today];
 
-    for (i = 0; i < 3; i++) {
-      asteroidName = neos[i].name;//Returns the Name of the NEO
-      asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max
-      asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers
-      $("#asteroid_name_"+ i).text(asteroidName);
-      $("#asteroid_size_" + i).text(asteroidSize + " Meters"); //Returns the Max Diameter in Meters
-      $("#asteroid_miss_" + i).text(asteroidMiss + " Kilometers");//Returns closes Approach
-      console.log(neos[i].is_potentially_hazardous_asteroid);//Boolean for if it is potentially dangerous
-    };
-  });
+            for (i = 0; i < 3; i++) {
+                asteroidName = neos[i].name;//Returns the Name of the NEO
+                asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max
+                asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers
+                $("#asteroid_name_" + i).text(asteroidName);
+                $("#asteroid_size_" + i).text(asteroidSize + " Meters"); //Returns the Max Diameter in Meters
+                $("#asteroid_miss_" + i).text(asteroidMiss + " Kilometers");//Returns closes Approach
+                console.log(neos[i].is_potentially_hazardous_asteroid);//Boolean for if it is potentially dangerous
+            };
+        });
 };
 
 chickenLittle();
@@ -112,33 +118,72 @@ function getApiImages() {
         })
         .then(function (data) {
             console.log(data);
-            var imageURL = data[0].url; //images url
-            var alt = data[0].title;    //title of the image
-            var desc = data[0].explanation; //description of the image
-            image1El.src = imageURL;    //sets the source of the image element equal to the url of the image
-            image1El.setAttribute("alt", alt);  //the alt of the image equal to the title
-            title1.innerText = alt; //inner text of the html for the title
-            desEl1.innerText = desc;    //inner text of the html for the description
 
-            var imageURL = data[1].url;
-            var alt = data[1].title;
-            var desc = data[1].explanation;
-            image2El.src = imageURL;
-            image2El.setAttribute("alt", alt);
-            title2.innerText = alt;
-            desEl2.innerText = desc;
+            for (i = 0; i <= 2; i++) {
+                var imageURL = data[i].url;
+                var alt = data[i].title;
+                var sentences = data[i].explanation;
+                sentences = sentences.split(". ");
+                sentences[0] += ". ";
+                sentences[0] += sentences[1];
+                sentences[0] += ". ";
+                var desc = sentences[0];
 
-            var imageURL = data[2].url;
-            var alt = data[2].title;
-            var desc = data[2].explanation;
-            image3El.src = imageURL;
-            image3El.setAttribute("alt", alt);
-            title3.innerText = alt;
-            desEl3.innerText = desc;
+                var imgContainer = $("<div class='carousel-item'>");
+                if (i == 0) {
+                    imgContainer.addClass("active")
+                }
+
+                var imageEl = $("<img src=" + imageURL + " class= 'image-style d-block w-100' alt = 'NASA_space_image' > ")
+
+                var titleDescContainer = $("<div class='blurb carousel-caption d-none d-md-block'>")
+
+                var titleEl = $("<h5 class='picture-title'>")
+                var imgDescription = $("<p class='picture-desc'>")
+
+                titleEl.html(alt);
+                imgDescription.html(desc);
+
+                imgContainer.append(imageEl);
+                titleDescContainer.append(titleEl);
+                titleDescContainer.append(imgDescription);
+                imgContainer.append(titleDescContainer);
+                carouselImgContainer.append(imgContainer);
+
+
+            }
+
+            // image1El.src = imageURL;
+            // image1El.setAttribute("alt", alt);
+            // title1.innerText = alt;
+            // desEl1.innerText = desc;
+            // title1.classList.add("picture-title");
+            // desEl1.classList.add("picture-desc");
+
+            // var imageURL = data[1].url;
+            // var alt = data[1].title;
+            // var desc = data[1].explanation;
+            // image2El.src = imageURL;
+            // image2El.setAttribute("alt", alt);
+            // title2.innerText = alt;
+            // desEl2.innerText = desc;
+            // title2.classList.add("picture-title");
+            // desEl2.classList.add("picture-desc");
+
+            // var imageURL = data[2].url;
+            // var alt = data[2].title;
+            // var desc = data[2].explanation;
+            // image3El.src = imageURL;
+            // image3El.setAttribute("alt", alt);
+            // title3.innerText = alt;
+            // desEl3.innerText = desc;
+            // title3.classList.add("picture-title");
+            // desEl3.classList.add("picture-desc");
         });
 }
 
 getApiImages();
+
 
 
 //Asteroid table
@@ -172,11 +217,11 @@ function astoroidSection() {
 
         var row = $("<tr scope='row'>");
 
-        row.append("<td id='asteroid_name_" + i + "'>"+ /*TODO:*/"astoroid name" +"</td>");
+        row.append("<td id='asteroid_name_" + i + "'>" + /*TODO:*/"astoroid name" + "</td>");
 
-        row.append("<td id='asteroid_size_" + i + "'>"+" Meters" + "</td>");
+        row.append("<td id='asteroid_size_" + i + "'>" + " Meters" + "</td>");
 
-        row.append("<td id='asteroid_miss_" + i + "'>"+ /*TODO:*/"miss distance" +"</td>");
+        row.append("<td id='asteroid_miss_" + i + "'>" + /*TODO:*/"miss distance" + "</td>");
 
         row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>")
 
@@ -217,7 +262,7 @@ function ISSSection(data) {
     console.log(data[0]);
     var tBodyISS = $("<tbody>");
 
-    for(i=0; i<3; i++){   //gets the next three days that the ISS will be visible and displays data on them
+    for (i = 0; i < 3; i++) {   //gets the next three days that the ISS will be visible and displays data on them
 
         var ISSrow = $("<tr>");
 
