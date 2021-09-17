@@ -11,7 +11,9 @@ var long;
 var body = $('body');
 var lightSwitch = $('#flexSwitchCheckChecked')
 
-
+//Picture API call variables
+var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
+var carouselImgContainer = $("#carousel-container");
 
 
 //Toggle light/dark mode event listener
@@ -50,9 +52,7 @@ $("#search").click(function (event) {
         });
 });
 
-//Picture API call variables
-var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
-var carouselImgContainer = $("#carousel-container");
+
 //gets the sunrise and sunset information and stores it in data
 var useCoordinates = function (lat, long) {
     //console.log(lat + " " + long);
@@ -71,7 +71,7 @@ var useCoordinates = function (lat, long) {
         })
 }
 
-function astoroidSection() {
+function asteroidSection() {
     console.log(areaCode, lat, long)
 };
 
@@ -152,33 +152,6 @@ function getApiImages() {
 
 
             }
-
-            // image1El.src = imageURL;
-            // image1El.setAttribute("alt", alt);
-            // title1.innerText = alt;
-            // desEl1.innerText = desc;
-            // title1.classList.add("picture-title");
-            // desEl1.classList.add("picture-desc");
-
-            // var imageURL = data[1].url;
-            // var alt = data[1].title;
-            // var desc = data[1].explanation;
-            // image2El.src = imageURL;
-            // image2El.setAttribute("alt", alt);
-            // title2.innerText = alt;
-            // desEl2.innerText = desc;
-            // title2.classList.add("picture-title");
-            // desEl2.classList.add("picture-desc");
-
-            // var imageURL = data[2].url;
-            // var alt = data[2].title;
-            // var desc = data[2].explanation;
-            // image3El.src = imageURL;
-            // image3El.setAttribute("alt", alt);
-            // title3.innerText = alt;
-            // desEl3.innerText = desc;
-            // title3.classList.add("picture-title");
-            // desEl3.classList.add("picture-desc");
         });
 }
 
@@ -187,57 +160,57 @@ getApiImages();
 
 
 //Asteroid table
-function astoroidSection() {
+function asteroidSection() {
 
-    var headerAstoroid = $("<header>Astoroids Near You</header>");
+    var headerAsteroid = $("<header class='table-header'><strong>Asteroids Near You</strong></header>");
 
-    container.append(headerAstoroid);
+    container.append(headerAsteroid);
 
-    var tableAstoroid = $("<table class='table table-dark table-striped'>");
+    var tableAsteroid = $("<table class='table table-dark table-striped'>");
 
-    var tHeadAstoroid = $("<thead>");
+    var tHeadAsteroid = $("<thead>");
 
-    var headerAstoroidTable = $("<tr>");
+    var headerAsteroidTable = $("<tr>");
 
-    headerAstoroidTable.append("<th scope='col'>Astoroid Name</th>");
+    headerAsteroidTable.append("<th scope='col'>Asteroid Name</th>");
 
-    headerAstoroidTable.append("<th scope='col'>Size</th>");
+    headerAsteroidTable.append("<th scope='col'>Size</th>");
 
-    headerAstoroidTable.append("<th scope='col'>Miss Distance</th>");
+    headerAsteroidTable.append("<th scope='col'>Distance From Earth</th>");
 
-    headerAstoroidTable.append("<th scope='col'></th>")
+    headerAsteroidTable.append("<th scope='col'>Potential Earth Impact</th>")
 
-    tHeadAstoroid.append(headerAstoroidTable);
+    tHeadAsteroid.append(headerAsteroidTable);
 
-    tableAstoroid.append(tHeadAstoroid);
+    tableAsteroid.append(tHeadAsteroid);
 
-    var tBodyAstoroid = $("<tbody>");
+    var tBodyAsteroid = $("<tbody>");
 
     for (var i = 0; i < 3/*TODO:lenght of array*/; i++) {
 
         var row = $("<tr scope='row'>");
 
-        row.append("<td id='asteroid_name_" + i + "'>" + /*TODO:*/"astoroid name" + "</td>");
+        row.append("<td id='asteroid_name_" + i + "'>" + /*TODO:*/"asteroid name" + "</td>");
 
         row.append("<td id='asteroid_size_" + i + "'>" + " Meters" + "</td>");
 
-        row.append("<td id='asteroid_miss_" + i + "'>" + /*TODO:*/"miss distance" + "</td>");
+        row.append("<td id='asteroid_miss_" + i + "'>" + /*TODO:*/"Distance from Earth" + "</td>");
 
         row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>")
 
-        tBodyAstoroid.append(row);
+        tBodyAsteroid.append(row);
     };
 
-    tableAstoroid.append(tBodyAstoroid);
+    tableAsteroid.append(tBodyAsteroid);
 
-    container.append(tableAstoroid);
+    container.append(tableAsteroid);
 
 };
 
 //ISS Satellite Table
 function ISSSection(data) {
 
-    var headerISS = $("<header class='issSection'>ISS</header>");
+    var headerISS = $("<header class='issSection table-header'><strong>ISS</strong></header>");
 
     container.append(headerISS);
 
@@ -290,7 +263,7 @@ function ISSSection(data) {
 };
 
 function init() {
-    astoroidSection();
+    asteroidSection();
     //ISSSection();
 };
 

@@ -18,14 +18,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>new webpage</title>
+    <title>Astronomical Guidance</title>
   </head>
 
   <body class="dark-mode">
-    <header>
-      <h1 id="title" class="website-title text-center">
-        Astronomical Guidance
-      </h1>
+    <header class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+      <h1 id="title" class="website-title">Astronomical Guidance</h1>
+
       <div class="form-check form-switch">
         <input
           class="form-check-input"
@@ -37,6 +36,23 @@
           >Light/Dark Mode</label
         >
       </div>
+
+      <form id="search-bar" class="d-flex mx-auto mb-0 mt-5">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Enter a zip code"
+          aria-label="Search"
+          id="zipcode"
+        />
+        <button
+          class="btn btn-style btn-outline-primary"
+          type="submit"
+          id="search"
+        >
+          Search
+        </button>
+      </form>
     </header>
 
     <div
@@ -87,19 +103,6 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
-
-      <form id="search-bar" class="d-flex mx-auto">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          id="zipcode"
-        />
-        <button class="btn btn-style btn-outline-primary" type="submit" id="search">
-          Search
-        </button>
-      </form>
     </div>
     <div id="info-table" class="hidden"></div>
     <!-- <nav class="navbar navbar-dark bg-dark d-flex align-items-center">
