@@ -96,10 +96,14 @@ function getApiImages() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             var imageURL = data[0].url;
             var alt = data[0].title;
-            var desc = data[0].explanation;
+            var sentences = data[0].explanation;
+            sentences = sentences.split(". ");
+            sentences[0] += ". ";
+            sentences[0] += sentences[1];
+            sentences[0] += ".  ...";
+            var desc = sentences[0];
             image1El.src = imageURL;
             image1El.setAttribute("alt", alt);
             title1.innerText = alt;
