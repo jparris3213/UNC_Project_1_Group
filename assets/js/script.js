@@ -117,36 +117,6 @@ function getApiImages() {
             return response.json();
         })
         .then(function (data) {
-<<<<<<< HEAD
-            var imageURL = data[0].url;
-            var alt = data[0].title;
-            var sentences = data[0].explanation;
-            sentences = sentences.split(". ");
-            sentences[0] += ". ";
-            sentences[0] += sentences[1];
-            sentences[0] += ".  ...";
-            var desc = sentences[0];
-            image1El.src = imageURL;
-            image1El.setAttribute("alt", alt);
-            title1.innerText = alt;
-            desEl1.innerText = desc;
-
-            var imageURL = data[1].url;
-            var alt = data[1].title;
-            var desc = data[1].explanation;
-            image2El.src = imageURL;
-            image2El.setAttribute("alt", alt);
-            title2.innerText = alt;
-            desEl2.innerText = desc;
-
-            var imageURL = data[2].url;
-            var alt = data[2].title;
-            var desc = data[2].explanation;
-            image3El.src = imageURL;
-            image3El.setAttribute("alt", alt);
-            title3.innerText = alt;
-            desEl3.innerText = desc;
-=======
             console.log(data);
 
             for (i = 0; i <= 2; i++) {
@@ -209,7 +179,6 @@ function getApiImages() {
             // desEl3.innerText = desc;
             // title3.classList.add("picture-title");
             // desEl3.classList.add("picture-desc");
->>>>>>> main
         });
 }
 
