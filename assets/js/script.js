@@ -1,6 +1,8 @@
 //DOM Selectors
 
 var container = $("#info-table");
+var areaCode = document.getElementById("areacode");
+var submitEl = document.getElementById("submit");
 var zipCode;
 var lat;
 var long;
@@ -22,14 +24,7 @@ var title3 = document.getElementById("img-three-title");
 var desEl1 = document.getElementById("desc-one");
 var desEl2 = document.getElementById("desc-two");
 var desEl3 = document.getElementById("desc-three");
-
-//Toggle light/dark mode event listener
-$('#flexSwitchCheckChecked').on('click', function (e) {
-
-
-});
-
-
+//----------------------------------------------------------------------------------------------------------------
 //Search button event listener
 $("#search").click(function (event) {
     event.preventDefault();
@@ -47,12 +42,32 @@ $("#search").click(function (event) {
             console.log(data);
             lat = data.lat;
             long = data.lon;
-            console.log(zipCode, lat, long)
+            console.log(areaCode, lat, long);
+            useCoordinates(lat,long);
         });
 });
 
+//gets the sunrise and sunset information and stores it in data
+var useCoordinates = function(lat, long) {
+    //console.log(lat + " " + long);
+    var issAPI = "https://satellites.fly.dev/passes/25544?lat=" + lat + "&lon=" + long + "&limit=100&days=7&visible_only=true";
+    console.log(issAPI);
+    fetch(issAPI)
+    .then(function(response){
+        if(response.ok) {
+            response.json()
+            .then(function(data){
+                console.log(data);
+                $(".issSection").remove(); //removes previous table information
+                ISSSection(data);          //sets up the table with the data provided
+            })
+        }
+    })
+}
 
-
+function astoroidSection (){
+            console.log(areaCode, lat, long)
+};
 
 //NASA Near Earth Object API
 
@@ -71,9 +86,9 @@ function chickenLittle () {
       var neos = data['near_earth_objects'][today];
 
     for (i = 0; i < 3; i++) {
-      asteroidName = neos[i].name;//Returns the Name of the NEO  
+      asteroidName = neos[i].name;//Returns the Name of the NEO
       asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max
-      asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers    
+      asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers
       $("#asteroid_name_"+ i).text(asteroidName);
       $("#asteroid_size_" + i).text(asteroidSize + " Meters"); //Returns the Max Diameter in Meters
       $("#asteroid_miss_" + i).text(asteroidMiss + " Kilometers");//Returns closes Approach
@@ -97,13 +112,13 @@ function getApiImages() {
         })
         .then(function (data) {
             console.log(data);
-            var imageURL = data[0].url;
-            var alt = data[0].title;
-            var desc = data[0].explanation;
-            image1El.src = imageURL;
-            image1El.setAttribute("alt", alt);
-            title1.innerText = alt;
-            desEl1.innerText = desc;
+            var imageURL = data[0].url; //images url
+            var alt = data[0].title;    //title of the image
+            var desc = data[0].explanation; //description of the image
+            image1El.src = imageURL;    //sets the source of the image element equal to the url of the image
+            image1El.setAttribute("alt", alt);  //the alt of the image equal to the title
+            title1.innerText = alt; //inner text of the html for the title
+            desEl1.innerText = desc;    //inner text of the html for the description
 
             var imageURL = data[1].url;
             var alt = data[1].title;
@@ -175,54 +190,63 @@ function astoroidSection() {
 };
 
 //ISS Satellite Table
-function ISSSection() {
+function ISSSection(data) {
 
-    var headerISS = $("<header>ISS</header>");
+    var headerISS = $("<header class='issSection'>ISS</header>");
 
-    container.append(headerISS)
+    container.append(headerISS);
 
-    var tableISS = $("<table class='table table-dark table-striped'>");
+    var tableISS = $("<table class='issSection table table-dark table-striped'>");
 
     var tHeadISS = $("<thead>");
 
     var headerISSTable = $("<tr>");
 
-    headerISSTable.append("<th>Next Time in View</th>");
+    headerISSTable.append("<th>Next Time in View (Culmination)</th>");
 
-    headerISSTable.append("<th>Is It Visable</th>");
+    headerISSTable.append("<th>Cardinal Coordinates</th>");
 
-    headerISSTable.append("<th>digrees from North</th>");
-
-    headerISSTable.append("<th>Angle off Horizon</th>");
+    headerISSTable.append("<th>Altitude off Horizon</th>");
 
     tHeadISS.append(headerISSTable);
 
     tableISS.append(tHeadISS);
 
+    // console.log(data[0].culmination.length);
+
+    console.log(data[0]);
     var tBodyISS = $("<tbody>");
 
-    var ISSrow = $("<tr>");
+    for(i=0; i<3; i++){   //gets the next three days that the ISS will be visible and displays data on them
 
-    ISSrow.append("<td>" + /*TODO:*/"next time" + "</td>");
+        var ISSrow = $("<tr>");
 
-    ISSrow.append("<td>" + /*TODO:*/"visable?" + "</td>");
+        var dateViewable = data[i].culmination.utc_datetime;    //gets the date/time
 
-    ISSrow.append("<td>" + /*TODO:*/"north" + "</td>");
+        var date = dateViewable.split(".");                     //splits the time and makes it easier to read
 
-    ISSrow.append("<td>" + /*TODO:*/"up" + "</td>");
+        var altitude = data[i].culmination.alt;                 //gets the altitude
 
-    tBodyISS.append(ISSrow);
+        var cardinalCoordinate = data[i].culmination.az_octant; //gets the cardinal coordinate
 
-    tableISS.append(tBodyISS);
+        ISSrow.append("<td>" + date[0] + "</td>");
 
-    container.append(tableISS);
+        ISSrow.append("<td>" + cardinalCoordinate + "</td>");
 
+        ISSrow.append("<td>" + altitude + "\u00B0" + "</td>");
+
+        tBodyISS.append(ISSrow);
+
+        tableISS.append(tBodyISS);
+
+        container.append(tableISS);
+
+    }
 };
 
-
 function init() {
-    ISSSection();
     astoroidSection();
+    //ISSSection();
 };
 
 init();
