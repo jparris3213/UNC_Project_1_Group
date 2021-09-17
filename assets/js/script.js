@@ -25,22 +25,6 @@ var desEl1 = document.getElementById("desc-one");
 var desEl2 = document.getElementById("desc-two");
 var desEl3 = document.getElementById("desc-three");
 //----------------------------------------------------------------------------------------------------------------
-
-$("#search").click(function(event){
-    event.preventDefault();
-
-    areaCode = $("#areacode").val();
-    //console.log(areaCode);
-    var areaUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + areaCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
-    fetch(areaUrl)
-})
-//Toggle light/dark mode event listener
-$('#flexSwitchCheckChecked').on('click', function (e) {
-
-
-});
-
-
 //Search button event listener
 $("#search").click(function (event) {
     event.preventDefault();
@@ -102,9 +86,9 @@ function chickenLittle () {
       var neos = data['near_earth_objects'][today];
 
     for (i = 0; i < 3; i++) {
-      asteroidName = neos[i].name;//Returns the Name of the NEO  
+      asteroidName = neos[i].name;//Returns the Name of the NEO
       asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max
-      asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers    
+      asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers
       $("#asteroid_name_"+ i).text(asteroidName);
       $("#asteroid_size_" + i).text(asteroidSize + " Meters"); //Returns the Max Diameter in Meters
       $("#asteroid_miss_" + i).text(asteroidMiss + " Kilometers");//Returns closes Approach
