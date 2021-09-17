@@ -1,19 +1,14 @@
 /* font-family: 'Alumni Sans', sans-serif;
 font-family: 'Roboto Mono', monospace; */
 
-/* Dark/default theme css */
-
 :root {
 }
 
 body {
   font-family: "Alumni Sans", sans-serif;
   font-size: 20px;
-}
-
-.dark-mode {
-  color: white;
-  background-color: black;
+  background-color: white;
+  color: black;
 }
 
 #title {
@@ -22,6 +17,7 @@ body {
   font-weight: bolder;
 }
 
+/* change button style so its not see through */
 .switch-func {
   background-color: white;
   color: black;
