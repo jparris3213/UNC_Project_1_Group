@@ -189,7 +189,7 @@ getApiImages();
 //Asteroid table
 function asteroidSection() {
 
-    var headerAsteroid = $("<header class='table-header'><strong>Asteroids Near You</strong></header>");
+    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Tooltip text</span></strong></header>");
 
     container.append(headerAsteroid);
 
@@ -205,7 +205,11 @@ function asteroidSection() {
 
     headerAsteroidTable.append("<th scope='col'>Distance From Earth</th>");
 
-    headerAsteroidTable.append("<th scope='col'>Potential Earth Impact</th>")
+    headerAsteroidTable.append("<th scope='col'>Potential Earth Impact</th>");
+
+    headerAsteroidTable.append("<th scope='col'>Date of Clossest Pass</th>");
+
+    headerAsteroidTable.append("<th scope='col'>Current Distance</th>");
 
     tHeadAsteroid.append(headerAsteroidTable);
 
@@ -223,7 +227,11 @@ function asteroidSection() {
 
         row.append("<td id='asteroid_miss_" + i + "'>" + /*TODO:*/"Distance from Earth" + "</td>");
 
-        row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>")
+        row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>");
+
+        row.append("<td id='date_clossest_" + i + "'>" +/*TODO*/"clossest" + "</td>");
+
+        row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
 
         tBodyAsteroid.append(row);
     };
@@ -237,7 +245,7 @@ function asteroidSection() {
 //ISS Satellite Table
 function ISSSection(data) {
 
-    var headerISS = $("<header class='issSection table-header'><strong>ISS</strong></header>");
+    var headerISS = $("<header class='issSection table-header'><strong>ISS Location Information</strong></header>");
 
     container.append(headerISS);
 

@@ -90,6 +90,32 @@ body {
   border-radius: 5px;
 }
 
+/* css for tooltip   */
+.tiptool {
+  position: relative;
+  border-bottom: 1px dotted black;
+}
+
+.tiptool .texttooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  border: 1px solid white;
+  top: -5px;
+  right: 105%;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tiptool:hover .texttooltip {
+  visibility: visible;
+}
+
 .table-header {
   font-size: 200%;
   text-align: center;
