@@ -7,35 +7,25 @@ font-family: 'Roboto Mono', monospace; */
 body {
   font-family: "Alumni Sans", sans-serif;
   font-size: 20px;
-  background-color: white;
+}
+
+.dark-mode {
   color: black;
 }
 
 #title {
-  font-size: 400% !important;
-  margin-left: 375px;
+  font-size: 50px;
   font-weight: bolder;
 }
 
-/* change button style so its not see through */
 .switch-func {
   background-color: white;
   color: black;
 }
 
-#search-bar {
-  position: absolute;
-  left: 20px;
-}
-
-.form-switch {
-  margin-top: 15px;
-  margin-right: 20px;
-}
-
 .carousel {
   display: flex;
-  width: 100vw;
+  /* width: 85vw; */
   height: 75vh;
   overflow: hidden;
   position: relative;
@@ -89,4 +79,8 @@ body {
 .table-header {
   font-size: 200%;
   text-align: center;
+}
+
+#info-table {
+  width: 75%;
 }
