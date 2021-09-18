@@ -8,7 +8,7 @@ font-family: 'Roboto Mono', monospace; */
 
 body {
   font-family: "Alumni Sans", sans-serif;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .dark-mode {
@@ -17,7 +17,7 @@ body {
 }
 
 #title {
-  font-size: 50px;
+  font-size: 75px;
   font-weight: bolder;
 }
 
@@ -66,21 +66,21 @@ body {
 }
 
 .picture-title {
-  font-size: 250%;
+  font-size: 60px;
   background-color: black;
   opacity: 70%;
   border-radius: 5px;
 }
 
 .picture-desc {
-  font-size: 125%;
+  font-size: 30px;
   background-color: black;
   opacity: 70%;
   border-radius: 5px;
 }
 
 .table-header {
-  font-size: 200%;
+  font-size: 50px;
   text-align: center;
 }
 

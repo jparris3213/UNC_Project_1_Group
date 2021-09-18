@@ -1,6 +1,8 @@
 /* font-family: 'Alumni Sans', sans-serif;
 font-family: 'Roboto Mono', monospace; */
 
+/* Dark/default theme css */
+
 :root {
 }
 
@@ -10,7 +12,8 @@ body {
 }
 
 .dark-mode {
-  color: black;
+  color: white;
+  background-color: black;
 }
 
 #title {
@@ -63,21 +66,21 @@ body {
 }
 
 .picture-title {
-  font-size: 250%;
+  font-size: 50px;
   background-color: black;
   opacity: 70%;
   border-radius: 5px;
 }
 
 .picture-desc {
-  font-size: 125%;
+  font-size: 30px;
   background-color: black;
   opacity: 70%;
   border-radius: 5px;
 }
 
 .table-header {
-  font-size: 200%;
+  font-size: 50px;
   text-align: center;
 }
 

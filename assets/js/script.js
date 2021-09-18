@@ -1,5 +1,3 @@
-//DOM Selectors
-
 var container = $("#info-table");
 var areaCode = document.getElementById("areacode");
 var submitEl = document.getElementById("submit");
