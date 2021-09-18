@@ -86,7 +86,6 @@ body {
 }
 
 .tiptool .texttooltip {
-  /* visibility: hidden; */
   display: none;
   width: 120px;
   background-color: black;
@@ -103,7 +102,6 @@ body {
 }
 
 .tiptool:hover .texttooltip {
-  /* visibility: visible; */
   display: inline;
 }
 
