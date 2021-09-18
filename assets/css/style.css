@@ -80,15 +80,16 @@ body {
 }
 #historyTitle button {
   margin-left: 1rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 ul button {
   list-style: none;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 #historyTitle {
   margin-top: 1rem;
   margin-left: 1rem;
+}
 
 /* css for tooltip   */
 .tiptool {
