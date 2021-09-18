@@ -6,13 +6,15 @@ var submitEl = document.getElementById("submit");
 var zipCode;
 var lat;
 var long;
+var historyEl = document.getElementById("history");
+var historyBtn = document.getElementsByClassName("historyBtn");
 
 //Toggle light/dark mode variables
 var body = $('body');
 var lightSwitch = $('#flexSwitchCheckChecked')
 
 //Picture API call variables
-var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
+var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=3";
 var carouselImgContainer = $("#carousel-container");
 
 
@@ -37,7 +39,7 @@ lightSwitch.on('click', function (e) {
 //Search button event listener
 $("#search").click(function (event) {
     event.preventDefault();
-    split_screen = true;
+    split_screen = true;                //for showing the tables
     searchanimation(split_screen);
     zipCode = $("#zipcode").val();
     zipUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + zipCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
@@ -53,8 +55,8 @@ $("#search").click(function (event) {
             console.log(data);
             lat = data.lat;
             long = data.lon;
-            console.log(areaCode, lat, long);
             useCoordinates(lat, long);
+            return zipCode;
         });
 
     chickenLittle();
@@ -77,6 +79,8 @@ var useCoordinates = function (lat, long) {
                         console.log(data);
                         $(".issSection").remove(); //removes previous table information
                         ISSSection(data);          //sets up the table with the data provided
+                        storeZipCodeData(zipCode, data);
+                        writeHistory(); //writes the button to the page
                     })
             }
         })
@@ -147,26 +151,26 @@ function getApiImages() {
             console.log(data);
 
             for (i = 0; i <= 2; i++) {
-                var imageURL = data[i].url;
-                var alt = data[i].title;
-                var sentences = data[i].explanation;
-                sentences = sentences.split(". ");
-                sentences[0] += ". ";
-                sentences[0] += sentences[1];
-                sentences[0] += ". ";
-                var desc = sentences[0];
+                var imageURL = data[i].url;             //gets image url
+                var alt = data[i].title;                //gets image title
+                var sentences = data[i].explanation;    //gets image description
+                sentences = sentences.split(". ");      //splits the sentance at its first sentance
+                sentences[0] += ". ";                   //adds this . and space to the variable
+                sentences[0] += sentences[1];           //adds the second sentance
+                sentences[0] += ". ";                   //finds the end of the second sentance
+                var desc = sentences[0];                //sets the sentances to a variable
 
                 var imgContainer = $("<div class='carousel-item'>");
                 if (i == 0) {
-                    imgContainer.addClass("active")
+                    imgContainer.addClass("active")     //if its the first image container it will add the active class
                 }
 
                 var imageEl = $("<img src=" + imageURL + " class='image-fluid image-style d-block w-100' alt = 'NASA_space_image'>")
 
-                var titleDescContainer = $("<div class='blurb carousel-caption d-none d-md-block'>")
+                var titleDescContainer = $("<div class='blurb carousel-caption d-none d-md-block'>");
 
-                var titleEl = $("<h5 class='picture-title'>")
-                var imgDescription = $("<p class='picture-desc'>")
+                var titleEl = $("<h5 class='picture-title'>");
+                var imgDescription = $("<p class='picture-desc'>");
 
                 titleEl.html(alt);
                 imgDescription.html(desc);
@@ -262,7 +266,11 @@ function ISSSection(data) {
     console.log(data[0]);
     var tBodyISS = $("<tbody>");
 
-    for (i = 0; i < 3; i++) {   //gets the next three days that the ISS will be visible and displays data on them
+    for (i = 0; i < data.length; i++) {   //gets the next three days that the ISS will be visible and displays data on them
+
+        if(i>2){                          //if the length of the data is more than 3 it will exit the function
+            return;
+        }
 
         var ISSrow = $("<tr>");
 
@@ -312,9 +320,61 @@ function searchanimation(shouldisplit) {
 
 };
 
-function init() {
+//stores the zipcode and data related to the visibility of the ISS
+function storeZipCodeData(zip, data) {
+    var zipDataString = JSON.stringify(data);
+    localStorage.setItem(zip, zipDataString);
+};
+
+//writes the last zipcodes used
+var writeHistory = function() {
+    historyEl.innerHTML = "";           //prevents multiple of the same zipcodes from appearing
+    for(i=0;i<localStorage.length;i++) {
+        var name = localStorage.key(i);
+        var button = document.createElement("button");
+        var li = document.createElement("li");
+        //var br = document.createElement("br");
+        li.innerText = name;
+        li.classList.add("historyBtn");
+        button.classList.add("btn", "btn-style", "btn-outline-primary");
+        button.appendChild(li);
+        historyEl.appendChild(button);
+        //historyEl.appendChild(br);
+    }
+    putEventListeners();
+};
+
+//when a specific zipcode button is clicked
+var historyClicked = function() {
+    for(i=0;i<localStorage.length;i++) {
+        if(this.innerText === localStorage.key(i)) {
+            $(".issSection").remove();          //removes the previous chart information
+            var zipCodeData = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            ISSSection(zipCodeData);
+            split_screen = true;                //for showing the tables
+            searchanimation(split_screen);
+        }
+    }
+    chickenLittle();
+}
+
+//adds event listeners to each button created on the history buttons
+var putEventListeners = function(){
+    for(i=0;i<localStorage.length;i++) {
+        historyBtn[i].addEventListener("click", historyClicked);
+    }
+}
+
+//clear history of the local storage
+$(".clear").click(function (event) {
+    localStorage.clear();
+    historyEl.innerHTML = "";
+});
+
+function init() {                                       //sets up the page/table and hides the tables at the start
     searchanimation(split_screen);
     asteroidSection();
+    writeHistory();
     //ISSSection();
 };
 
