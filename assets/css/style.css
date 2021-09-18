@@ -96,7 +96,7 @@ body {
   border: 1px solid white;
   top: -5px;
   right: 105%;
-
+  font-size: 15px;
   position: absolute;
   z-index: 1;
 }
