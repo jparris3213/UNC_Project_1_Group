@@ -53,7 +53,7 @@ body {
 }
 
 .btn-style:hover {
-  background-color: #282aa7;
+  background-color: #c2c2ca;
   color: aliceblue;
 }
 
@@ -77,6 +77,43 @@ body {
   background-color: black;
   opacity: 70%;
   border-radius: 5px;
+}
+#historyTitle button {
+  margin-left: 1rem;
+  border-radius: .5rem;
+}
+ul button {
+  list-style: none;
+  margin: .5rem;
+}
+#historyTitle {
+  margin-top: 1rem;
+  margin-left: 1rem;
+
+/* css for tooltip   */
+.tiptool {
+  position: relative;
+  border-bottom: 1px dotted black;
+}
+
+.tiptool .texttooltip {
+  display: none;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  border: 1px solid white;
+  top: -5px;
+  right: 105%;
+  font-size: 15px;
+  position: absolute;
+  z-index: 1;
+}
+
+.tiptool:hover .texttooltip {
+  display: inline;
 }
 
 .table-header {
