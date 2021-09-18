@@ -90,7 +90,32 @@ ul button {
   margin-top: 1rem;
   margin-left: 1rem;
 
+/* css for tooltip   */
+.tiptool {
+  position: relative;
+  border-bottom: 1px dotted black;
 }
+
+.tiptool .texttooltip {
+  display: none;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  border: 1px solid white;
+  top: -5px;
+  right: 105%;
+  font-size: 15px;
+  position: absolute;
+  z-index: 1;
+}
+
+.tiptool:hover .texttooltip {
+  display: inline;
+}
+
 .table-header {
   font-size: 200%;
   text-align: center;
