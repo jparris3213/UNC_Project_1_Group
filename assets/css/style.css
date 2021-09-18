@@ -17,8 +17,7 @@ body {
 }
 
 #title {
-  font-size: 400% !important;
-  margin-left: 375px;
+  font-size: 50px;
   font-weight: bolder;
 }
 
@@ -27,21 +26,10 @@ body {
   color: black;
 }
 
-#search-bar {
-  position: absolute;
-  left: 20px;
-}
-
-.form-switch {
-  margin-top: 15px;
-  margin-right: 20px;
-}
-
 .carousel {
   display: flex;
-  width: 85vw;
+  /* width: 85vw; */
   height: 75vh;
-  margin-left: 95px;
   overflow: hidden;
   position: relative;
   align-content: center;
@@ -98,5 +86,4 @@ body {
 
 #info-table {
   width: 75%;
-  margin-left: 150px;
 }
