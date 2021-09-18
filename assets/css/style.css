@@ -64,7 +64,7 @@ body {
 }
 
 .btn-style:hover {
-  background-color: #282aa7;
+  background-color: #c2c2ca;
   color: aliceblue;
 }
 
@@ -89,7 +89,19 @@ body {
   opacity: 70%;
   border-radius: 5px;
 }
+#historyTitle button {
+  margin-left: 1rem;
+  border-radius: .5rem;
+}
+ul button {
+  list-style: none;
+  margin: .5rem;
+}
+#historyTitle {
+  margin-top: 1rem;
+  margin-left: 1rem;
 
+}
 .table-header {
   font-size: 200%;
   text-align: center;
