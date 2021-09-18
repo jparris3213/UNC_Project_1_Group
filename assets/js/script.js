@@ -17,7 +17,7 @@ var carouselImgContainer = $("#carousel-container");
 
 
 //Asteroid Table Length Chooser
-var table_length = 7 ;
+var table_length = 7;
 
 
 //Toggle light/dark mode event listener
@@ -56,11 +56,11 @@ $("#search").click(function (event) {
             console.log(areaCode, lat, long);
             useCoordinates(lat, long);
         });
-    
+
     chickenLittle();
 });
 
-$("#showpicture").on("click", function(){
+$("#showpicture").on("click", function () {
     searchanimation(false);
 })
 
@@ -88,49 +88,49 @@ function asteroidSection() {
 
 //NASA Near Earth Object API
 
-function chickenLittle () {
+function chickenLittle() {
     var today = moment().format('YYYY-MM-DD');
-    var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" +  today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
+    var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
     fetch(neoAPI, {
-      method: 'GET',
-      credentials: 'same-origin',
-      redirect: 'follow'
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow'
     })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-        var neos = data['near_earth_objects'][today];
-  
-      for (i = 0; i < table_length; i++) {
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            var neos = data['near_earth_objects'][today];
 
-        var asteroidName = neos[i].name;//Returns the Name of the NEO  
+            for (i = 0; i < table_length; i++) {
 
-        var asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max;
-        var roundedSize = Math.round(asteroidSize * 100) / 100;
-        var commaSize = roundedSize.toLocaleString("en-US");
+                var asteroidName = neos[i].name;//Returns the Name of the NEO  
 
-        var asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers;
-        var roundedMiss = Math.round(asteroidMiss * 100) / 100;   
-        var commaMiss = roundedMiss.toLocaleString("en-US");
+                var asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max;
+                var roundedSize = Math.round(asteroidSize * 100) / 100;
+                var commaSize = roundedSize.toLocaleString("en-US");
 
-        $("#asteroid_name_"+ i).text(asteroidName);
-        $("#asteroid_size_" + i).text(commaSize + " Meters"); //Returns the Max Diameter in Meters
-        $("#asteroid_miss_" + i).text(commaMiss + " Kilometers");//Returns closest Approach
-        var dangerGauge = neos[i].is_potentially_hazardous_asteroid;//Boolean for if it is potentially dangerous
-        if (dangerGauge === true) {
-          $("#asteroid_distruction_" + i).text("☢");
-        } else {
-          $("#asteroid_distruction_" + i).text("✌");
-        };
-  
-      };
+                var asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers;
+                var roundedMiss = Math.round(asteroidMiss * 100) / 100;
+                var commaMiss = roundedMiss.toLocaleString("en-US");
+
+                $("#asteroid_name_" + i).text(asteroidName);
+                $("#asteroid_size_" + i).text(commaSize + " Meters"); //Returns the Max Diameter in Meters
+                $("#asteroid_miss_" + i).text(commaMiss + " Kilometers");//Returns closest Approach
+                var dangerGauge = neos[i].is_potentially_hazardous_asteroid;//Boolean for if it is potentially dangerous
+                if (dangerGauge === true) {
+                    $("#asteroid_distruction_" + i).text("☢");
+                } else {
+                    $("#asteroid_distruction_" + i).text("✌");
+                };
+
+            };
 
 
-    });
-  };
-  
-  
+        });
+};
+
+
 
 
 //API call to retrieve images from NASA API call
@@ -161,7 +161,7 @@ function getApiImages() {
                     imgContainer.addClass("active")
                 }
 
-                var imageEl = $("<img src=" + imageURL + " class='image-style d-block w-100' alt = 'NASA_space_image'>")
+                var imageEl = $("<img src=" + imageURL + " class='image-fluid image-style d-block w-100' alt = 'NASA_space_image'>")
 
                 var titleDescContainer = $("<div class='blurb carousel-caption d-none d-md-block'>")
 
@@ -290,24 +290,25 @@ function ISSSection(data) {
 };
 
 //SplitScreen Animation
-var split_screen = false ;
+var split_screen = false;
 
-function searchanimation (shouldisplit) {
+function searchanimation(shouldisplit) {
     var carousel = $("#carouselExampleCaptions");
     var info_table = $("#info-table");
     if (shouldisplit === false) {
-        carousel.animate({width: "100%"},1000);
-        info_table.animate({width: "0%"},800);
-        info_table.attr("style","display:none");
-        
+        carousel.animate({ width: "100%" }, 1000);
+        info_table.animate({ width: "0%" }, 800);
+        info_table.attr("style", "display:none");
+
 
     } else {
         //$(".table").attr("style","display:block");
         carousel.animate({
-            width: "50%"},1000);
-        info_table.attr("style","display:block")
-        info_table.animate({ width: "50%"},1000);
-        };
+            width: "50%"
+        }, 1000);
+        info_table.attr("style", "display:block")
+        info_table.animate({ width: "50%" }, 1000);
+    };
 
 };
 
