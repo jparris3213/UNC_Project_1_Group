@@ -11,7 +11,13 @@ var long;
 var body = $('body');
 var lightSwitch = $('#flexSwitchCheckChecked')
 
+//Picture API call variables
+var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
+var carouselImgContainer = $("#carousel-container");
 
+
+//Asteroid Table Length Chooser
+var table_length = 7 ;
 
 
 //Toggle light/dark mode event listener
@@ -31,6 +37,8 @@ lightSwitch.on('click', function (e) {
 //Search button event listener
 $("#search").click(function (event) {
     event.preventDefault();
+    split_screen = true;
+    searchanimation(split_screen);
     zipCode = $("#zipcode").val();
     zipUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + zipCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
     fetch(zipUrl, {
@@ -48,11 +56,14 @@ $("#search").click(function (event) {
             console.log(areaCode, lat, long);
             useCoordinates(lat, long);
         });
+    
+    chickenLittle();
 });
 
-//Picture API call variables
-var requestUrl = "https://api.nasa.gov/planetary/apod?api_key=qsQaRTJvk3pICPh8Ta3EufSeNvUosCdNK2CVBlfm&count=4";
-var carouselImgContainer = $("#carousel-container");
+$("#showpicture").on("click", function(){
+    searchanimation(false);
+})
+
 //gets the sunrise and sunset information and stores it in data
 var useCoordinates = function (lat, long) {
     //console.log(lat + " " + long);
@@ -71,39 +82,55 @@ var useCoordinates = function (lat, long) {
         })
 }
 
-function astoroidSection() {
+function asteroidSection() {
     console.log(areaCode, lat, long)
 };
 
 //NASA Near Earth Object API
 
-function chickenLittle() {
+function chickenLittle () {
     var today = moment().format('YYYY-MM-DD');
-    var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
+    var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" +  today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
     fetch(neoAPI, {
-        method: 'GET',
-        credentials: 'same-origin',
-        redirect: 'follow'
+      method: 'GET',
+      credentials: 'same-origin',
+      redirect: 'follow'
     })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            var neos = data['near_earth_objects'][today];
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+        var neos = data['near_earth_objects'][today];
+  
+      for (i = 0; i < table_length; i++) {
 
-            for (i = 0; i < 3; i++) {
-                asteroidName = neos[i].name;//Returns the Name of the NEO
-                asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max
-                asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers
-                $("#asteroid_name_" + i).text(asteroidName);
-                $("#asteroid_size_" + i).text(asteroidSize + " Meters"); //Returns the Max Diameter in Meters
-                $("#asteroid_miss_" + i).text(asteroidMiss + " Kilometers");//Returns closes Approach
-                console.log(neos[i].is_potentially_hazardous_asteroid);//Boolean for if it is potentially dangerous
-            };
-        });
-};
+        var asteroidName = neos[i].name;//Returns the Name of the NEO  
 
-chickenLittle();
+        var asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max;
+        var roundedSize = Math.round(asteroidSize * 100) / 100;
+        var commaSize = roundedSize.toLocaleString("en-US");
+
+        var asteroidMiss = neos[i].close_approach_data[0].miss_distance.kilometers;
+        var roundedMiss = Math.round(asteroidMiss * 100) / 100;   
+        var commaMiss = roundedMiss.toLocaleString("en-US");
+
+        $("#asteroid_name_"+ i).text(asteroidName);
+        $("#asteroid_size_" + i).text(commaSize + " Meters"); //Returns the Max Diameter in Meters
+        $("#asteroid_miss_" + i).text(commaMiss + " Kilometers");//Returns closest Approach
+        var dangerGauge = neos[i].is_potentially_hazardous_asteroid;//Boolean for if it is potentially dangerous
+        if (dangerGauge === true) {
+          $("#asteroid_distruction_" + i).text("☢");
+        } else {
+          $("#asteroid_distruction_" + i).text("✌");
+        };
+  
+      };
+
+
+    });
+  };
+  
+  
 
 
 //API call to retrieve images from NASA API call
@@ -152,33 +179,6 @@ function getApiImages() {
 
 
             }
-
-            // image1El.src = imageURL;
-            // image1El.setAttribute("alt", alt);
-            // title1.innerText = alt;
-            // desEl1.innerText = desc;
-            // title1.classList.add("picture-title");
-            // desEl1.classList.add("picture-desc");
-
-            // var imageURL = data[1].url;
-            // var alt = data[1].title;
-            // var desc = data[1].explanation;
-            // image2El.src = imageURL;
-            // image2El.setAttribute("alt", alt);
-            // title2.innerText = alt;
-            // desEl2.innerText = desc;
-            // title2.classList.add("picture-title");
-            // desEl2.classList.add("picture-desc");
-
-            // var imageURL = data[2].url;
-            // var alt = data[2].title;
-            // var desc = data[2].explanation;
-            // image3El.src = imageURL;
-            // image3El.setAttribute("alt", alt);
-            // title3.innerText = alt;
-            // desEl3.innerText = desc;
-            // title3.classList.add("picture-title");
-            // desEl3.classList.add("picture-desc");
         });
 }
 
@@ -187,57 +187,57 @@ getApiImages();
 
 
 //Asteroid table
-function astoroidSection() {
+function asteroidSection() {
 
-    var headerAstoroid = $("<header>Astoroids Near You</header>");
+    var headerAsteroid = $("<header class='table-header'><strong>Asteroids Near You</strong></header>");
 
-    container.append(headerAstoroid);
+    container.append(headerAsteroid);
 
-    var tableAstoroid = $("<table class='table table-dark table-striped'>");
+    var tableAsteroid = $("<table class='table table-dark table-striped'>");
 
-    var tHeadAstoroid = $("<thead>");
+    var tHeadAsteroid = $("<thead>");
 
-    var headerAstoroidTable = $("<tr>");
+    var headerAsteroidTable = $("<tr>");
 
-    headerAstoroidTable.append("<th scope='col'>Astoroid Name</th>");
+    headerAsteroidTable.append("<th scope='col'>Asteroid Name</th>");
 
-    headerAstoroidTable.append("<th scope='col'>Size</th>");
+    headerAsteroidTable.append("<th scope='col'>Size</th>");
 
-    headerAstoroidTable.append("<th scope='col'>Miss Distance</th>");
+    headerAsteroidTable.append("<th scope='col'>Distance From Earth</th>");
 
-    headerAstoroidTable.append("<th scope='col'></th>")
+    headerAsteroidTable.append("<th scope='col'>Potential Earth Impact</th>")
 
-    tHeadAstoroid.append(headerAstoroidTable);
+    tHeadAsteroid.append(headerAsteroidTable);
 
-    tableAstoroid.append(tHeadAstoroid);
+    tableAsteroid.append(tHeadAsteroid);
 
-    var tBodyAstoroid = $("<tbody>");
+    var tBodyAsteroid = $("<tbody>");
 
-    for (var i = 0; i < 3/*TODO:lenght of array*/; i++) {
+    for (var i = 0; i < table_length/*TODO:lenght of array*/; i++) {
 
         var row = $("<tr scope='row'>");
 
-        row.append("<td id='asteroid_name_" + i + "'>" + /*TODO:*/"astoroid name" + "</td>");
+        row.append("<td id='asteroid_name_" + i + "'>" + /*TODO:*/"asteroid name" + "</td>");
 
         row.append("<td id='asteroid_size_" + i + "'>" + " Meters" + "</td>");
 
-        row.append("<td id='asteroid_miss_" + i + "'>" + /*TODO:*/"miss distance" + "</td>");
+        row.append("<td id='asteroid_miss_" + i + "'>" + /*TODO:*/"Distance from Earth" + "</td>");
 
         row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>")
 
-        tBodyAstoroid.append(row);
+        tBodyAsteroid.append(row);
     };
 
-    tableAstoroid.append(tBodyAstoroid);
+    tableAsteroid.append(tBodyAsteroid);
 
-    container.append(tableAstoroid);
+    container.append(tableAsteroid);
 
 };
 
 //ISS Satellite Table
 function ISSSection(data) {
 
-    var headerISS = $("<header class='issSection'>ISS</header>");
+    var headerISS = $("<header class='issSection table-header'><strong>ISS</strong></header>");
 
     container.append(headerISS);
 
@@ -289,8 +289,31 @@ function ISSSection(data) {
     }
 };
 
+//SplitScreen Animation
+var split_screen = false ;
+
+function searchanimation (shouldisplit) {
+    var carousel = $("#carouselExampleCaptions");
+    var info_table = $("#info-table");
+    if (shouldisplit === false) {
+        carousel.animate({width: "100%"},1000);
+        info_table.animate({width: "0%"},800);
+        info_table.attr("style","display:none");
+        
+
+    } else {
+        //$(".table").attr("style","display:block");
+        carousel.animate({
+            width: "50%"},1000);
+        info_table.attr("style","display:block")
+        info_table.animate({ width: "50%"},1000);
+        };
+
+};
+
 function init() {
-    astoroidSection();
+    searchanimation(split_screen);
+    asteroidSection();
     //ISSSection();
 };
 
