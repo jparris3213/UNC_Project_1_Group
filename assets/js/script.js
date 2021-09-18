@@ -355,6 +355,7 @@ var historyClicked = function() {
             searchanimation(split_screen);
         }
     }
+    chickenLittle();
 }
 
 //adds event listeners to each button created on the history buttons
