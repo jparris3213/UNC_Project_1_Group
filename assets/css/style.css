@@ -17,8 +17,7 @@ body {
 }
 
 #title {
-  font-size: 400% !important;
-  margin-left: 375px;
+  font-size: 50px;
   font-weight: bolder;
 }
 
@@ -27,19 +26,9 @@ body {
   color: black;
 }
 
-#search-bar {
-  position: absolute;
-  left: 20px;
-}
-
-.form-switch {
-  margin-top: 15px;
-  margin-right: 20px;
-}
-
 .carousel {
   display: flex;
-  width: 100vw;
+  /* width: 85vw; */
   height: 75vh;
   overflow: hidden;
   position: relative;
@@ -105,4 +94,8 @@ ul button {
 .table-header {
   font-size: 200%;
   text-align: center;
+}
+
+#info-table {
+  width: 75%;
 }
