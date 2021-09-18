@@ -39,8 +39,9 @@ body {
 
 .carousel {
   display: flex;
-  width: 100vw;
+  width: 85vw;
   height: 75vh;
+  margin-left: 95px;
   overflow: hidden;
   position: relative;
   align-content: center;
@@ -93,4 +94,9 @@ body {
 .table-header {
   font-size: 200%;
   text-align: center;
+}
+
+#info-table {
+  width: 75%;
+  margin-left: 150px;
 }

@@ -134,7 +134,7 @@ function getApiImages() {
                     imgContainer.addClass("active")
                 }
 
-                var imageEl = $("<img src=" + imageURL + " class= 'image-style d-block w-100' alt = 'NASA_space_image' > ")
+                var imageEl = $("<img src=" + imageURL + " class='image-style d-block w-100' alt = 'NASA_space_image'>")
 
                 var titleDescContainer = $("<div class='blurb carousel-caption d-none d-md-block'>")
 
