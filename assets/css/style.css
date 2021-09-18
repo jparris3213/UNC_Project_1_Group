@@ -86,7 +86,8 @@ body {
 }
 
 .tiptool .texttooltip {
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
   width: 120px;
   background-color: black;
   color: #fff;
@@ -102,7 +103,8 @@ body {
 }
 
 .tiptool:hover .texttooltip {
-  visibility: visible;
+  /* visibility: visible; */
+  display: inline;
 }
 
 .table-header {
