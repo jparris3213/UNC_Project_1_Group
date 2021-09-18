@@ -189,7 +189,7 @@ getApiImages();
 //Asteroid table
 function asteroidSection() {
 
-    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Potential Earth Impact is a hazarbous object that makes close approaches to the Earth and is large enough to cause significant regional damage.</span></strong></header>");
+    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Potential Earth Impact is a hazarbous object that makes close approaches to the Earth and is large enough to cause significant regional damage.✌ or ☢</span></strong></header>");
 
     container.append(headerAsteroid);
 
