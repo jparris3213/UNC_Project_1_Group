@@ -1,3 +1,5 @@
+//DOM Selectors
+
 var container = $("#info-table");
 var areaCode = document.getElementById("areacode");
 var submitEl = document.getElementById("submit");
@@ -25,11 +27,11 @@ lightSwitch.on('click', function (e) {
     var toggleMode = e.target.checked;
 
     if (!toggleMode) {
-        body.removeClass('dark-mode');
-        body.addClass('light-mode');
+        body.removeClass('dark');
+        body.addClass('light');
     } else {
-        body.removeClass('light-mode');
-        body.addClass('dark-mode');
+        body.removeClass('light');
+        body.addClass('dark');
     }
 });
 
@@ -53,7 +55,7 @@ $("#search").click(function (event) {
             console.log(data);
             lat = data.lat;
             long = data.lon;
-            useCoordinates(lat, long);
+            // useCoordinates(lat, long);
             return zipCode;
         });
 
@@ -121,9 +123,9 @@ function chickenLittle() {
                 $("#asteroid_miss_" + i).text(commaMiss + " Kilometers");//Returns closest Approach
                 var dangerGauge = neos[i].is_potentially_hazardous_asteroid;//Boolean for if it is potentially dangerous
                 if (dangerGauge === true) {
-                    $("#asteroid_distruction_" + i).text("☢");
+                    $("#asteroid_distruction_" + i).text("☢Impact Possible");
                 } else {
-                    $("#asteroid_distruction_" + i).text("✌");
+                    $("#asteroid_distruction_" + i).text("✌No threat");
                 };
 
             };
@@ -131,8 +133,6 @@ function chickenLittle() {
 
         });
 };
-
-
 
 
 //API call to retrieve images from NASA API call
@@ -184,14 +184,10 @@ function getApiImages() {
         });
 }
 
-getApiImages();
-
-
-
 //Asteroid table
 function asteroidSection() {
 
-    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Potential Earth Impact is a hazarbous object that makes close approaches to the Earth and is large enough to cause significant regional damage.✌ or ☢</span></strong></header>");
+    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Potential Earth Impact represents whether a large asteroid will be traveling close enough to Earth to cause significant regional damage.</span></strong></header>");
 
     container.append(headerAsteroid);
 
@@ -209,7 +205,7 @@ function asteroidSection() {
 
     headerAsteroidTable.append("<th scope='col'>Potential Earth Impact</th>");
 
-    headerAsteroidTable.append("<th scope='col'>Date of Clossest Pass</th>");
+    headerAsteroidTable.append("<th scope='col'>Date of Closest Pass</th>");
 
     headerAsteroidTable.append("<th scope='col'>Current Distance</th>");
 
@@ -231,7 +227,7 @@ function asteroidSection() {
 
         row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>");
 
-        row.append("<td id='date_clossest_" + i + "'>" +/*TODO*/"clossest" + "</td>");
+        row.append("<td id='date_closest_" + i + "'>" +/*TODO*/"closest" + "</td>");
 
         row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
 
@@ -274,7 +270,7 @@ function ISSSection(data) {
 
     for (i = 0; i < data.length; i++) {   //gets the next three days that the ISS will be visible and displays data on them
 
-        if(i>2){                          //if the length of the data is more than 3 it will exit the function
+        if (i > 2) {                          //if the length of the data is more than 3 it will exit the function
             return;
         }
 
@@ -303,6 +299,7 @@ function ISSSection(data) {
     }
 };
 
+
 //SplitScreen Animation
 var split_screen = false;
 
@@ -310,15 +307,15 @@ function searchanimation(shouldisplit) {
     var carousel = $("#carouselExampleCaptions");
     var info_table = $("#info-table");
     if (shouldisplit === false) {
-        carousel.animate({ width: "100%" }, 1000);
-        info_table.animate({ width: "0%" }, 800);
+        // carousel.animate({ width: "100%" }, 1000);
+        // info_table.animate({ width: "0%" }, 800);
         info_table.attr("style", "display:none");
 
 
     } else {
         //$(".table").attr("style","display:block");
         carousel.animate({
-            width: "50%"
+            width: "50%",
         }, 1000);
         info_table.attr("style", "display:block")
         info_table.animate({ width: "50%" }, 1000);
@@ -333,16 +330,17 @@ function storeZipCodeData(zip, data) {
 };
 
 //writes the last zipcodes used
-var writeHistory = function() {
+var writeHistory = function () {
     historyEl.innerHTML = "";           //prevents multiple of the same zipcodes from appearing
-    for(i=0;i<localStorage.length;i++) {
+    for (i = 0; i < localStorage.length; i++) {
         var name = localStorage.key(i);
         var button = document.createElement("button");
         var li = document.createElement("li");
         //var br = document.createElement("br");
         li.innerText = name;
         li.classList.add("historyBtn");
-        button.classList.add("btn", "btn-style", "btn-outline-primary");
+        button.classList.add("btn", "btn-success", "my-2", "my-sm-0");
+        button.setAttribute('id', 'search')
         button.appendChild(li);
         historyEl.appendChild(button);
         //historyEl.appendChild(br);
@@ -351,9 +349,9 @@ var writeHistory = function() {
 };
 
 //when a specific zipcode button is clicked
-var historyClicked = function() {
-    for(i=0;i<localStorage.length;i++) {
-        if(this.innerText === localStorage.key(i)) {
+var historyClicked = function () {
+    for (i = 0; i < localStorage.length; i++) {
+        if (this.innerText === localStorage.key(i)) {
             $(".issSection").remove();          //removes the previous chart information
             var zipCodeData = JSON.parse(localStorage.getItem(localStorage.key(i)));
             ISSSection(zipCodeData);
@@ -365,8 +363,8 @@ var historyClicked = function() {
 }
 
 //adds event listeners to each button created on the history buttons
-var putEventListeners = function(){
-    for(i=0;i<localStorage.length;i++) {
+var putEventListeners = function () {
+    for (i = 0; i < localStorage.length; i++) {
         historyBtn[i].addEventListener("click", historyClicked);
     }
 }
@@ -378,10 +376,11 @@ $(".clear").click(function (event) {
 });
 
 function init() {                                       //sets up the page/table and hides the tables at the start
+    getApiImages();
+    writeHistory();
     searchanimation(split_screen);
     asteroidSection();
-    writeHistory();
-    //ISSSection();
+    ISSSection();
 };
 
 init();
