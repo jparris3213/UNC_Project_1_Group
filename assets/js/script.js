@@ -63,7 +63,7 @@ $("#search").click(function (event) {
             useCoordinates(lat, long);
             return zipCode;
         });
-    asteroidSection();
+    asteroidSection();//Needs to be set to only run the table creation the first time
     chickenLittle();
 });
 
@@ -94,8 +94,6 @@ var useCoordinates = function (lat, long) {
 //NASA Near Earth Object API
 function chickenLittle() {
     var today = moment().format('YYYY-MM-DD');
-    var todayhour = moment().format('YYYY-MM-DD HH:mm');
-    console.log(todayhour);
     var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
     fetch(neoAPI, {
         method: 'GET',
@@ -113,9 +111,6 @@ function chickenLittle() {
                 var asteroidName = neos[i].name;  
 
                 var closestpass = neos[i].close_approach_data[0].close_approach_date_full;
-                //var close_pass = neos[i].close_approach_data[0].close_approach_date_full;
-                //var days_remain = moclosestpass.diff(todayhour);
-                //console.log(days_remain + "Days Remain");
                 
 
                 var asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max;
@@ -138,6 +133,12 @@ function chickenLittle() {
                 } else {
                     $("#asteroid_distruction_" + i).text("✌No threat");
                 };
+<<<<<<< HEAD
+                $("#date_closest_" + i).text(closestpass);
+
+
+=======
+>>>>>>> main
             };
         });
 };
@@ -245,7 +246,11 @@ function asteroidSection() {
 
         row.append("<td id='date_closest_" + i + "'>" +"closest" + "</td>");
 
+<<<<<<< HEAD
+        //row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
+=======
         row.append("<td id='current_distance_" + i + "'>" +"distance" + "</td>");
+>>>>>>> main
 
         tBodyAsteroid.append(row);
     };
