@@ -21,7 +21,7 @@
     <title>Astronomical Guidance</title>
   </head>
 
-  <body class="dark-mode">
+  <body class="dark light">
     <header
       class="
         d-flex
@@ -33,24 +33,26 @@
         px-3
       "
     >
-      <form id="search-bar" class="d-flex">
+      <form id="search-bar" class="form-inline d-flex search-container">
         <input
-          class="form-control me-2"
+          class="form-control mr-sm-2 search-input-field"
           type="search"
           placeholder="Enter a zip code"
           aria-label="Search"
           id="zipcode"
         />
-        <button
-          class="btn btn-style btn-outline-primary"
-          type="submit"
-          id="search"
-        >
+        <button class="btn btn-success my-2 my-sm-0" type="submit" id="search">
           Search
         </button>
       </form>
 
-      <h1 id="title" class="website-title">Astronomical Guidance</h1>
+      <!-- <button class="btn btn-style btn-secondary" type="submit" id="search">
+          Search
+        </button> -->
+
+      <h1 id="title" class="website-title text-flicker-in-glow">
+        Astronomical Guidance
+      </h1>
 
       <div class="form-check form-switch">
         <input
@@ -60,12 +62,12 @@
           checked
         />
         <label class="form-check-label" for="flexSwitchCheckChecked"
-          >Light/Dark Mode</label
+          ><strong>Light/Dark Mode</strong></label
         >
       </div>
     </header>
 
-    <div class="row p-5">
+    <div class="row px-5">
       <div
         id="carouselExampleCaptions"
         class="carousel slide"
@@ -116,17 +118,15 @@
         </button>
       </div>
       <div id="info-table" class="hidden"></div>
-      <!-- <nav class="navbar navbar-dark bg-dark d-flex align-items-center">
-      <div class="container-fluid w-100"> -->
-
-      <!-- </div>
-    </nav> -->
     </div>
-    <div>
-      <h3 id="historyTitle">Previous ZipCodes <button class="btn btn-style btn-outline-primary clear">Clear History</button></h3>
-      <ul id="history">
-
-      </ul>
+    <div id="history-container">
+      <h3 id="historyTitle">
+        <strong> Previous Zip Codes</strong>
+        <button id="search" class="btn btn-success my-2 my-sm-0 clear">
+          Clear History
+        </button>
+      </h3>
+      <ul id="history"></ul>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
