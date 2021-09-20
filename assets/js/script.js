@@ -63,6 +63,7 @@ $("#search").click(function (event) {
             useCoordinates(lat, long);
             return zipCode;
         });
+    $(".asteroidSection").remove();
     asteroidSection();//Needs to be set to only run the table creation the first time
     chickenLittle();
 });
@@ -200,11 +201,11 @@ function getApiImages() {
 //Asteroid table
 function asteroidSection() {
 
-    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Hazardous Column represents whether a large asteroid will be traveling close enough to Earth to cause significant regional damage.</span></strong></header>");
+    var headerAsteroid = $("<header class='table-header tiptool asteroidSection'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Hazardous Column represents whether a large asteroid will be traveling close enough to Earth to cause significant regional damage.</span></strong></header>");
 
     container.append(headerAsteroid);
 
-    var tableAsteroid = $("<table class='table table-dark table-striped'>");
+    var tableAsteroid = $("<table class='table table-dark table-striped asteroidSection'>");
 
     var tHeadAsteroid = $("<thead>");
 
@@ -386,8 +387,13 @@ var writeHistory = function() {
 //when a specific zipcode button is clicked
 var historyClicked = function() {
     var nodeList = document.getElementsByTagName("li");
+    console.log(nodeList);
     for(i=0;i<=nodeList.length;i++) {
         if(this.innerText == nodeList[i].innerText) {
+            $(".asteroidSection").remove();
+            asteroidSection();//Needs to be set to only run the table creation the first time
+            chickenLittle();
+
             console.log(i);
             console.log(nodeList[i].innerText);
             $(".issSection").remove();          //removes the previous chart information
@@ -396,9 +402,11 @@ var historyClicked = function() {
             ISSSection(zipCodeData[i].data);
             split_screen = true;                //for showing the tables
             searchAnimation(split_screen);
+
+            return;
         }
     }
-    chickenLittle();
+    
 }
 
 //adds event listeners to each button created on the history buttons
