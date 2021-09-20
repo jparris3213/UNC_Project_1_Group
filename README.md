@@ -18,7 +18,7 @@ To use the website, simply use the search bar by adding a zipcode of your choice
 
 ## Images
 
-![alt website](./)
+![alt website](/assets/images/final_webpage.png)
 
 ## Credits
 
