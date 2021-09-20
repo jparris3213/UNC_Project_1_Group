@@ -109,14 +109,8 @@ function chickenLittle() {
             var neos = data['near_earth_objects'][today];
             console.log(neos);
             for (i = 0; i < table_length; i++) {
-<<<<<<< HEAD
-
-                
-                var asteroidName = neos[i].name;//Returns the Name of the NEO  
-=======
                 //Returns the Name of the NEO
                 var asteroidName = neos[i].name;  
->>>>>>> main
 
                 var closestpass = neos[i].close_approach_data[0].close_approach_date_full;
                 //var close_pass = neos[i].close_approach_data[0].close_approach_date_full;
@@ -144,12 +138,6 @@ function chickenLittle() {
                 } else {
                     $("#asteroid_distruction_" + i).text("✌No threat");
                 };
-<<<<<<< HEAD
-                $("#date_clossest_" + i).text(closestpass);
-
-
-=======
->>>>>>> main
             };
         });
 };
@@ -257,11 +245,7 @@ function asteroidSection() {
 
         row.append("<td id='date_closest_" + i + "'>" +"closest" + "</td>");
 
-<<<<<<< HEAD
-        //row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
-=======
         row.append("<td id='current_distance_" + i + "'>" +"distance" + "</td>");
->>>>>>> main
 
         tBodyAsteroid.append(row);
     };
@@ -454,13 +438,9 @@ function init() {
     searchAnimation(split_screen);
 };
 
-<<<<<<< HEAD
 init();
 
 $("#carouselExampleCaptions").on("click", function(){
     $("#info-table").attr("style","display:none");
     $("#carouselExampleCaptions").animate({ width: "100%" }, 1000);
 })
-=======
-init();
->>>>>>> main
