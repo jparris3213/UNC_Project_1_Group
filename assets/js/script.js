@@ -94,6 +94,8 @@ var useCoordinates = function (lat, long) {
 //NASA Near Earth Object API
 function chickenLittle() {
     var today = moment().format('YYYY-MM-DD');
+    var todayhour = moment().format('YYYY-MM-DD HH:mm');
+    console.log(todayhour);
     var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
     fetch(neoAPI, {
         method: 'GET',
@@ -105,10 +107,22 @@ function chickenLittle() {
         })
         .then(function (data) {
             var neos = data['near_earth_objects'][today];
-
+            console.log(neos);
             for (i = 0; i < table_length; i++) {
+<<<<<<< HEAD
+
+                
+                var asteroidName = neos[i].name;//Returns the Name of the NEO  
+=======
                 //Returns the Name of the NEO
                 var asteroidName = neos[i].name;  
+>>>>>>> main
+
+                var closestpass = neos[i].close_approach_data[0].close_approach_date_full;
+                //var close_pass = neos[i].close_approach_data[0].close_approach_date_full;
+                //var days_remain = moclosestpass.diff(todayhour);
+                //console.log(days_remain + "Days Remain");
+                
 
                 var asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max;
                 var roundedSize = Math.round(asteroidSize * 100) / 100;
@@ -130,6 +144,12 @@ function chickenLittle() {
                 } else {
                     $("#asteroid_distruction_" + i).text("✌No threat");
                 };
+<<<<<<< HEAD
+                $("#date_clossest_" + i).text(closestpass);
+
+
+=======
+>>>>>>> main
             };
         });
 };
@@ -215,7 +235,7 @@ function asteroidSection() {
 
     headerAsteroidTable.append("<th scope='col'>Date of Closest Pass</th>");
 
-    headerAsteroidTable.append("<th scope='col'>Current Distance</th>");
+    //headerAsteroidTable.append("<button scope='col' class='btn btn-style btn-outline-primary' id='closeTable'>Close Table</button>");
 
     tHeadAsteroid.append(headerAsteroidTable);
 
@@ -237,7 +257,11 @@ function asteroidSection() {
 
         row.append("<td id='date_closest_" + i + "'>" +"closest" + "</td>");
 
+<<<<<<< HEAD
+        //row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
+=======
         row.append("<td id='current_distance_" + i + "'>" +"distance" + "</td>");
+>>>>>>> main
 
         tBodyAsteroid.append(row);
     };
@@ -409,6 +433,8 @@ var putEventListeners = function(){
 $(".clear").click(function (event) {
     localStorage.removeItem("ZipCodes");
     historyEl.innerHTML = "";
+    $("#info-table").attr("style","display:none");
+    $("#carouselExampleCaptions").animate({ width: "100%" }, 1000);
 });
 
 //gets local storage from previous session
@@ -428,4 +454,13 @@ function init() {
     searchAnimation(split_screen);
 };
 
+<<<<<<< HEAD
 init();
+
+$("#carouselExampleCaptions").on("click", function(){
+    $("#info-table").attr("style","display:none");
+    $("#carouselExampleCaptions").animate({ width: "100%" }, 1000);
+})
+=======
+init();
+>>>>>>> main
