@@ -123,15 +123,15 @@ function chickenLittle() {
 
                 $("#asteroid_name_" + i).text(asteroidName);
                 //Returns the Max Diameter in Meters
-                $("#asteroid_size_" + i).text(commaSize + " Meters"); 
+                $("#asteroid_size_" + i).text(commaSize + " m"); 
                 //Returns closest Approach
-                $("#asteroid_miss_" + i).text(commaMiss + " Kilometers");
+                $("#asteroid_miss_" + i).text(commaMiss + " km");
                 //Boolean for if it is potentially dangerous
                 var dangerGauge = neos[i].is_potentially_hazardous_asteroid;
                 if (dangerGauge === true) {
-                    $("#asteroid_distruction_" + i).text("☢Impact Possible");
+                    $("#asteroid_distruction_" + i).text("☢ Potentially");
                 } else {
-                    $("#asteroid_distruction_" + i).text("✌No threat");
+                    $("#asteroid_distruction_" + i).text("✌ No threat");
                 };
                 $("#date_closest_" + i).text(closestpass);
 
@@ -200,7 +200,7 @@ function getApiImages() {
 //Asteroid table
 function asteroidSection() {
 
-    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Potential Earth Impact represents whether a large asteroid will be traveling close enough to Earth to cause significant regional damage.</span></strong></header>");
+    var headerAsteroid = $("<header class='table-header tiptool'><strong>Asteroids Near You ⓘ<span class='texttooltip'>Hazardous Column represents whether a large asteroid will be traveling close enough to Earth to cause significant regional damage.</span></strong></header>");
 
     container.append(headerAsteroid);
 
@@ -214,9 +214,9 @@ function asteroidSection() {
 
     headerAsteroidTable.append("<th scope='col'>Size</th>");
 
-    headerAsteroidTable.append("<th scope='col'>Distance From Earth</th>");
+    headerAsteroidTable.append("<th scope='col'>Closest Distance (in Kilometers)</th>");
 
-    headerAsteroidTable.append("<th scope='col'>Potential Earth Impact</th>");
+    headerAsteroidTable.append("<th scope='col'>Hazardous?</th>");
 
     headerAsteroidTable.append("<th scope='col'>Date of Closest Pass</th>");
 
