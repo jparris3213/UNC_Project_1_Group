@@ -21,6 +21,9 @@ var carouselImgContainer = $("#carousel-container");
 //Asteroid Table Length Chooser
 var table_length = 7;
 
+//Storing AreaCodes and their data
+var areaCodeArray = [];
+
 
 //Toggle light/dark mode event listener
 lightSwitch.on('click', function (e) {
@@ -41,7 +44,7 @@ $("#search").click(function (event) {
     event.preventDefault();
     split_screen = true;                //for showing the tables
     searchanimation(split_screen);
-    zipCode = $("#zipcode").val();
+    zipCode = $("#zipcode").val().trim();
     zipUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + zipCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
     fetch(zipUrl, {
         method: 'GET',
@@ -148,7 +151,6 @@ function getApiImages() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
 
             for (i = 0; i <= 2; i++) {
                 var imageURL = data[i].url;             //gets image url
@@ -269,9 +271,6 @@ function ISSSection(data) {
 
     tableISS.append(tHeadISS);
 
-    // console.log(data[0].culmination.length);
-
-    console.log(data[0]);
     var tBodyISS = $("<tbody>");
 
     for (i = 0; i < data.length; i++) {   //gets the next three days that the ISS will be visible and displays data on them
@@ -328,37 +327,64 @@ function searchanimation(shouldisplit) {
 
 };
 
-//stores the zipcode and data related to the visibility of the ISS
+//stores the zipcode and data related to the visibility of the ISS into the LocalStorage
 function storeZipCodeData(zip, data) {
-    var zipDataString = JSON.stringify(data);
-    localStorage.setItem(zip, zipDataString);
+    var zipData = data;
+    var isTrue = false;
+    console.log(zipData[0]);
+    if(areaCodeArray.length === 0) {
+        areaCodeArray.push({zip, data});
+        localStorage.setItem("ZipCodes", JSON.stringify(areaCodeArray));
+        console.log(areaCodeArray);
+    }
+    if(areaCodeArray.length != 0){
+        for(i=0;i<areaCodeArray.length;i++){
+            if(zip === areaCodeArray[i].zip) {
+                isTrue = true;
+            }
+        }
+    }
+    if(isTrue === true){
+        return;
+    }
+    else {
+        areaCodeArray.push({zip, data});
+        localStorage.setItem("ZipCodes", JSON.stringify(areaCodeArray));
+        console.log("pushed!");
+    }
+
 };
 
-//writes the last zipcodes used
+//writes out the area codes in the localstorage
 var writeHistory = function() {
     historyEl.innerHTML = "";           //prevents multiple of the same zipcodes from appearing
-    for(i=0;i<localStorage.length;i++) {
-        var name = localStorage.key(i);
+    var storedZipData = JSON.parse(localStorage.getItem("ZipCodes"));
+    console.log(storedZipData.length);
+    for(i=0;i<storedZipData.length;i++) {
+        console.log(storedZipData[i].zip);
+        var name = storedZipData[i].zip;
         var button = document.createElement("button");
         var li = document.createElement("li");
-        //var br = document.createElement("br");
         li.innerText = name;
         li.classList.add("historyBtn");
         button.classList.add("btn", "btn-style", "btn-outline-primary");
         button.appendChild(li);
         historyEl.appendChild(button);
-        //historyEl.appendChild(br);
     }
     putEventListeners();
 };
 
 //when a specific zipcode button is clicked
 var historyClicked = function() {
-    for(i=0;i<localStorage.length;i++) {
-        if(this.innerText === localStorage.key(i)) {
+    var nodeList = document.getElementsByTagName("li");
+    for(i=0;i<=nodeList.length;i++) {
+        if(this.innerText == nodeList[i].innerText) {
+            console.log(i);
+            console.log(nodeList[i].innerText);
             $(".issSection").remove();          //removes the previous chart information
-            var zipCodeData = JSON.parse(localStorage.getItem(localStorage.key(i)));
-            ISSSection(zipCodeData);
+            var zipCodeData = JSON.parse(localStorage.getItem("ZipCodes"));
+
+            ISSSection(zipCodeData[i].data);
             split_screen = true;                //for showing the tables
             searchanimation(split_screen);
         }
@@ -368,18 +394,30 @@ var historyClicked = function() {
 
 //adds event listeners to each button created on the history buttons
 var putEventListeners = function(){
-    for(i=0;i<localStorage.length;i++) {
+    var nodeList = document.getElementsByTagName("li");
+    console.log(nodeList);
+    for(i=0;i<nodeList.length;i++) {
         historyBtn[i].addEventListener("click", historyClicked);
     }
 }
 
 //clear history of the local storage
 $(".clear").click(function (event) {
-    localStorage.clear();
+    localStorage.removeItem("ZipCodes");
     historyEl.innerHTML = "";
 });
 
-function init() {                                       //sets up the page/table and hides the tables at the start
+//gets local storage from previous session
+function onloadRequestLocalStorage() {
+    var storedZips = JSON.parse(localStorage.getItem("ZipCodes"));
+    if (storedZips !== null) {
+        console.log("working");
+        areaCodeArray = storedZips;
+    }
+}
+
+function init() {                                     //sets up the page/table and hides the tables at the start
+    onloadRequestLocalStorage();
     searchanimation(split_screen);
     asteroidSection();
     writeHistory();
