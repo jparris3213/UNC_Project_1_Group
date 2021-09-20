@@ -19,8 +19,10 @@ var carouselImgContainer = $("#carousel-container");
 
 
 //Asteroid Table Length Chooser
-var table_length = 7;
+var table_length = 5;
 
+//SplitScreen Animation
+var split_screen = false;
 
 //Toggle light/dark mode event listener
 lightSwitch.on('click', function (e) {
@@ -39,8 +41,9 @@ lightSwitch.on('click', function (e) {
 //Search button event listener
 $("#search").click(function (event) {
     event.preventDefault();
-    split_screen = true;                //for showing the tables
-    searchanimation(split_screen);
+    //for showing the tables
+    split_screen = true;                
+    searchAnimation(split_screen);
     zipCode = $("#zipcode").val();
     zipUrl = "https://api.openweathermap.org/geo/1.0/zip?zip=" + zipCode + "&appid=ce2aa6f67e317ff5f10deb7b9c6358f1";
     fetch(zipUrl, {
@@ -52,13 +55,12 @@ $("#search").click(function (event) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             lat = data.lat;
             long = data.lon;
             useCoordinates(lat, long);
             return zipCode;
         });
-
+    asteroidSection();
     chickenLittle();
 });
 
@@ -68,30 +70,25 @@ $("#showpicture").on("click", function () {
 
 //gets the sunrise and sunset information and stores it in data
 var useCoordinates = function (lat, long) {
-    //console.log(lat + " " + long);
     var issAPI = "https://satellites.fly.dev/passes/25544?lat=" + lat + "&lon=" + long + "&limit=100&days=7&visible_only=true";
-    console.log(issAPI);
     fetch(issAPI)
         .then(function (response) {
             if (response.ok) {
                 response.json()
                     .then(function (data) {
-                        console.log(data);
-                        $(".issSection").remove(); //removes previous table information
-                        ISSSection(data);          //sets up the table with the data provided
+                        //removes previous table information
+                        $(".issSection").remove(); 
+                        //sets up the table with the data provided
+                        ISSSection(data);          
                         storeZipCodeData(zipCode, data);
-                        writeHistory(); //writes the button to the page
+                        //writes the button to the page
+                        writeHistory(); 
                     })
             }
         })
 }
 
-function asteroidSection() {
-    console.log(areaCode, lat, long)
-};
-
 //NASA Near Earth Object API
-
 function chickenLittle() {
     var today = moment().format('YYYY-MM-DD');
     var neoAPI = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + today + "&end_date=" + today + "&api_key=aU9gsLEa5EEkdwAiUCG77iWZ1guGb6eXR4VVR4rn";
@@ -107,8 +104,8 @@ function chickenLittle() {
             var neos = data['near_earth_objects'][today];
 
             for (i = 0; i < table_length; i++) {
-
-                var asteroidName = neos[i].name;//Returns the Name of the NEO  
+                //Returns the Name of the NEO
+                var asteroidName = neos[i].name;  
 
                 var asteroidSize = neos[i].estimated_diameter.meters.estimated_diameter_max;
                 var roundedSize = Math.round(asteroidSize * 100) / 100;
@@ -119,18 +116,18 @@ function chickenLittle() {
                 var commaMiss = roundedMiss.toLocaleString("en-US");
 
                 $("#asteroid_name_" + i).text(asteroidName);
-                $("#asteroid_size_" + i).text(commaSize + " Meters"); //Returns the Max Diameter in Meters
-                $("#asteroid_miss_" + i).text(commaMiss + " Kilometers");//Returns closest Approach
-                var dangerGauge = neos[i].is_potentially_hazardous_asteroid;//Boolean for if it is potentially dangerous
+                //Returns the Max Diameter in Meters
+                $("#asteroid_size_" + i).text(commaSize + " Meters"); 
+                //Returns closest Approach
+                $("#asteroid_miss_" + i).text(commaMiss + " Kilometers");
+                //Boolean for if it is potentially dangerous
+                var dangerGauge = neos[i].is_potentially_hazardous_asteroid;
                 if (dangerGauge === true) {
                     $("#asteroid_distruction_" + i).text("☢Impact Possible");
                 } else {
                     $("#asteroid_distruction_" + i).text("✌No threat");
                 };
-
             };
-
-
         });
 };
 
@@ -146,21 +143,29 @@ function getApiImages() {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
 
             for (i = 0; i <= 2; i++) {
-                var imageURL = data[i].url;             //gets image url
-                var alt = data[i].title;                //gets image title
-                var sentences = data[i].explanation;    //gets image description
-                sentences = sentences.split(". ");      //splits the sentance at its first sentance
-                sentences[0] += ". ";                   //adds this . and space to the variable
-                sentences[0] += sentences[1];           //adds the second sentance
-                sentences[0] += ". ";                   //finds the end of the second sentance
-                var desc = sentences[0];                //sets the sentances to a variable
+                //gets image url
+                var imageURL = data[i].url;    
+                //gets image title
+                var alt = data[i].title;      
+                //gets image description
+                var sentences = data[i].explanation;   
+                //splits the sentance at its first sentance
+                sentences = sentences.split(". ");      
+                //adds this . and space to the variable
+                sentences[0] += ". ";                  
+                //adds the second sentance
+                sentences[0] += sentences[1];           
+                //finds the end of the second sentance
+                sentences[0] += ". ";                   
+                //sets the sentances to a variable
+                var desc = sentences[0];                
 
                 var imgContainer = $("<div class='carousel-item'>");
                 if (i == 0) {
-                    imgContainer.addClass("active")     //if its the first image container it will add the active class
+                    //if its the first image container it will add the active class
+                    imgContainer.addClass("active")     
                 }
 
                 var imageEl = $("<img src=" + imageURL + " class='image-fluid image-style d-block w-100' alt = 'NASA_space_image'>")
@@ -215,21 +220,21 @@ function asteroidSection() {
 
     var tBodyAsteroid = $("<tbody>");
 
-    for (var i = 0; i < table_length/*TODO:lenght of array*/; i++) {
+    for (var i = 0; i < table_length; i++) {
 
         var row = $("<tr scope='row'>");
 
-        row.append("<td id='asteroid_name_" + i + "'>" + /*TODO:*/"asteroid name" + "</td>");
+        row.append("<td id='asteroid_name_" + i + "'>" +"asteroid name" + "</td>");
 
         row.append("<td id='asteroid_size_" + i + "'>" + " Meters" + "</td>");
 
-        row.append("<td id='asteroid_miss_" + i + "'>" + /*TODO:*/"Distance from Earth" + "</td>");
+        row.append("<td id='asteroid_miss_" + i + "'>" +"Distance from Earth" + "</td>");
 
-        row.append("<td id='asteroid_distruction_" + i + "'>" +/*TODO*/"✌?☢" + "</td>");
+        row.append("<td id='asteroid_distruction_" + i + "'>" +"✌?☢" + "</td>");
 
-        row.append("<td id='date_closest_" + i + "'>" +/*TODO*/"closest" + "</td>");
+        row.append("<td id='date_closest_" + i + "'>" +"closest" + "</td>");
 
-        row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
+        row.append("<td id='current_distance_" + i + "'>" +"distance" + "</td>");
 
         tBodyAsteroid.append(row);
     };
@@ -263,26 +268,29 @@ function ISSSection(data) {
 
     tableISS.append(tHeadISS);
 
-    // console.log(data[0].culmination.length);
-
-    // console.log(data[0]);
     var tBodyISS = $("<tbody>");
 
-    for (i = 0; i < data.length; i++) {   //gets the next three days that the ISS will be visible and displays data on them
+    //gets the next three days that the ISS will be visible and displays data on them
+    for (i = 0; i < data.length; i++) {  
 
-        if (i > 2) {                          //if the length of the data is more than 3 it will exit the function
+        //if the length of the data is more than 3 it will exit the function
+        if (i > 2) {                          
             return;
         }
 
         var ISSrow = $("<tr>");
 
-        var dateViewable = data[i].culmination.utc_datetime;    //gets the date/time
+        //gets the date/time
+        var dateViewable = data[i].culmination.utc_datetime; 
 
-        var date = dateViewable.split(".");                     //splits the time and makes it easier to read
+        //splits the time and makes it easier to read
+        var date = dateViewable.split(".");
 
-        var altitude = data[i].culmination.alt;                 //gets the altitude
+        //gets the altitude
+        var altitude = data[i].culmination.alt;       
 
-        var cardinalCoordinate = data[i].culmination.az_octant; //gets the cardinal coordinate
+        //gets the cardinal coordinate
+        var cardinalCoordinate = data[i].culmination.az_octant; 
 
         ISSrow.append("<td>" + date[0] + "</td>");
 
@@ -299,11 +307,7 @@ function ISSSection(data) {
     }
 };
 
-
-//SplitScreen Animation
-var split_screen = false;
-
-function searchanimation(shouldisplit) {
+function searchAnimation(shouldisplit) {
     var carousel = $("#carouselExampleCaptions");
     var info_table = $("#info-table");
     if (shouldisplit === false) {
@@ -313,7 +317,6 @@ function searchanimation(shouldisplit) {
 
 
     } else {
-        //$(".table").attr("style","display:block");
         carousel.animate({
             width: "50%"
         }, 1000);
@@ -332,19 +335,19 @@ function storeZipCodeData(zip, data) {
 
 //writes the last zipcodes used
 var writeHistory = function () {
-    historyEl.innerHTML = "";           //prevents multiple of the same zipcodes from appearing
+
+    //prevents multiple of the same zipcodes from appearing
+    historyEl.innerHTML = "";           
     for (i = 0; i < localStorage.length; i++) {
         var name = localStorage.key(i);
         var button = document.createElement("button");
         var li = document.createElement("li");
-        //var br = document.createElement("br");
         li.innerText = name;
         li.classList.add("historyBtn");
         button.classList.add("btn", "btn-success", "my-2", "my-sm-0");
         button.setAttribute('id', 'search')
         button.appendChild(li);
         historyEl.appendChild(button);
-        //historyEl.appendChild(br);
     }
     putEventListeners();
 };
@@ -354,11 +357,14 @@ var writeHistory = function () {
 var historyClicked = function () {
     for (i = 0; i < localStorage.length; i++) {
         if (this.innerText === localStorage.key(i)) {
-            $(".issSection").remove();          //removes the previous chart information
+
+             //removes the previous chart information
+            $(".issSection").remove();         
             var zipCodeData = JSON.parse(localStorage.getItem(localStorage.key(i)));
             ISSSection(zipCodeData);
-            split_screen = true;                //for showing the tables
-            searchanimation(split_screen);
+            //for showing the tables
+            split_screen = true;                
+            searchAnimation(split_screen);
         }
     }
     chickenLittle();
@@ -377,12 +383,11 @@ $(".clear").click(function (event) {
     historyEl.innerHTML = "";
 });
 
-function init() {                                       //sets up the page/table and hides the tables at the start
+//sets up the page/table and hides the tables at the start
+function init() {                                      
     getApiImages();
     writeHistory();
-    searchanimation(split_screen);
-    asteroidSection();
-    // ISSSection();
+    searchAnimation(split_screen);
 };
 
 init();
