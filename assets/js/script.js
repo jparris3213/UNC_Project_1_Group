@@ -133,9 +133,12 @@ function chickenLittle() {
                 } else {
                     $("#asteroid_distruction_" + i).text("✌No threat");
                 };
+<<<<<<< HEAD
                 $("#date_closest_" + i).text(closestpass);
 
 
+=======
+>>>>>>> main
             };
         });
 };
@@ -243,7 +246,11 @@ function asteroidSection() {
 
         row.append("<td id='date_closest_" + i + "'>" +"closest" + "</td>");
 
+<<<<<<< HEAD
         //row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
+=======
+        row.append("<td id='current_distance_" + i + "'>" +"distance" + "</td>");
+>>>>>>> main
 
         tBodyAsteroid.append(row);
     };
@@ -396,7 +403,7 @@ var historyClicked = function() {
 
             ISSSection(zipCodeData[i].data);
             split_screen = true;                //for showing the tables
-            searchanimation(split_screen);
+            searchAnimation(split_screen);
         }
     }
     chickenLittle();
