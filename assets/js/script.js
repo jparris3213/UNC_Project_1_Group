@@ -390,7 +390,7 @@ var historyClicked = function() {
 
             ISSSection(zipCodeData[i].data);
             split_screen = true;                //for showing the tables
-            searchanimation(split_screen);
+            searchAnimation(split_screen);
         }
     }
     chickenLittle();
