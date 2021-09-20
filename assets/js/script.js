@@ -55,7 +55,7 @@ $("#search").click(function (event) {
             console.log(data);
             lat = data.lat;
             long = data.lon;
-            // useCoordinates(lat, long);
+            useCoordinates(lat, long);
             return zipCode;
         });
 
@@ -265,7 +265,7 @@ function ISSSection(data) {
 
     // console.log(data[0].culmination.length);
 
-    console.log(data[0]);
+    // console.log(data[0]);
     var tBodyISS = $("<tbody>");
 
     for (i = 0; i < data.length; i++) {   //gets the next three days that the ISS will be visible and displays data on them
@@ -307,15 +307,15 @@ function searchanimation(shouldisplit) {
     var carousel = $("#carouselExampleCaptions");
     var info_table = $("#info-table");
     if (shouldisplit === false) {
-        // carousel.animate({ width: "100%" }, 1000);
-        // info_table.animate({ width: "0%" }, 800);
+        carousel.animate({ width: "100%" }, 1000);
+        info_table.animate({ width: "0%" }, 800);
         info_table.attr("style", "display:none");
 
 
     } else {
         //$(".table").attr("style","display:block");
         carousel.animate({
-            width: "50%",
+            width: "50%"
         }, 1000);
         info_table.attr("style", "display:block")
         info_table.animate({ width: "50%" }, 1000);
@@ -328,6 +328,7 @@ function storeZipCodeData(zip, data) {
     var zipDataString = JSON.stringify(data);
     localStorage.setItem(zip, zipDataString);
 };
+
 
 //writes the last zipcodes used
 var writeHistory = function () {
@@ -347,6 +348,7 @@ var writeHistory = function () {
     }
     putEventListeners();
 };
+
 
 //when a specific zipcode button is clicked
 var historyClicked = function () {
@@ -380,7 +382,7 @@ function init() {                                       //sets up the page/table
     writeHistory();
     searchanimation(split_screen);
     asteroidSection();
-    ISSSection();
+    // ISSSection();
 };
 
 init();
