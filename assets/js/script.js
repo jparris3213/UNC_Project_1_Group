@@ -106,7 +106,6 @@ function chickenLittle() {
         })
         .then(function (data) {
             var neos = data['near_earth_objects'][today];
-            console.log(neos);
             for (i = 0; i < table_length; i++) {
                 //Returns the Name of the NEO
                 var asteroidName = neos[i].name;  
@@ -221,8 +220,6 @@ function asteroidSection() {
 
     headerAsteroidTable.append("<th scope='col'>Date of Closest Pass</th>");
 
-    //headerAsteroidTable.append("<button scope='col' class='btn btn-style btn-outline-primary' id='closeTable'>Close Table</button>");
-
     tHeadAsteroid.append(headerAsteroidTable);
 
     tableAsteroid.append(tHeadAsteroid);
@@ -242,8 +239,6 @@ function asteroidSection() {
         row.append("<td id='asteroid_distruction_" + i + "'>" +"✌?☢" + "</td>");
 
         row.append("<td id='date_closest_" + i + "'>" +"closest" + "</td>");
-
-        //row.append("<td id='current_distance_" + i + "'>" +/*TODO*/"distance" + "</td>");
 
         tBodyAsteroid.append(row);
     };
@@ -339,11 +334,9 @@ function searchAnimation(shouldisplit) {
 function storeZipCodeData(zip, data) {
     var zipData = data;
     var isTrue = false;
-    console.log(zipData[0]);
     if(areaCodeArray.length === 0) {
         areaCodeArray.push({zip, data});
         localStorage.setItem("ZipCodes", JSON.stringify(areaCodeArray));
-        console.log(areaCodeArray);
     }
     if(areaCodeArray.length != 0){
         for(i=0;i<areaCodeArray.length;i++){
@@ -358,7 +351,6 @@ function storeZipCodeData(zip, data) {
     else {
         areaCodeArray.push({zip, data});
         localStorage.setItem("ZipCodes", JSON.stringify(areaCodeArray));
-        console.log("pushed!");
     }
 
 };
@@ -367,19 +359,19 @@ function storeZipCodeData(zip, data) {
 var writeHistory = function() {
     historyEl.innerHTML = "";           //prevents multiple of the same zipcodes from appearing
     var storedZipData = JSON.parse(localStorage.getItem("ZipCodes"));
-    console.log(storedZipData.length);
-    for(i=0;i<storedZipData.length;i++) {
-        console.log(storedZipData[i].zip);
-        var name = storedZipData[i].zip;
-        var button = document.createElement("button");
-        var li = document.createElement("li");
-        li.innerText = name;
-        li.classList.add("historyBtn");
-        button.classList.add("btn", "btn-success", "my-2", "my-sm-0");
-        button.setAttribute('id', 'search')
-        button.appendChild(li);
-        historyEl.appendChild(button);
-    }
+    if(storedZipData != null){
+        for(i=0;i<storedZipData.length;i++) {
+            var name = storedZipData[i].zip;
+            var button = document.createElement("button");
+            var li = document.createElement("li");
+            li.innerText = name;
+            li.classList.add("historyBtn");
+            button.classList.add("btn", "btn-success", "my-2", "my-sm-0");
+            button.setAttribute('id', 'search')
+            button.appendChild(li);
+            historyEl.appendChild(button);
+        };
+    };
     putEventListeners();
 };
 
@@ -387,15 +379,12 @@ var writeHistory = function() {
 //when a specific zipcode button is clicked
 var historyClicked = function() {
     var nodeList = document.getElementsByTagName("li");
-    console.log(nodeList);
     for(i=0;i<=nodeList.length;i++) {
         if(this.innerText == nodeList[i].innerText) {
             $(".asteroidSection").remove();
             asteroidSection();//Needs to be set to only run the table creation the first time
             chickenLittle();
 
-            console.log(i);
-            console.log(nodeList[i].innerText);
             $(".issSection").remove();          //removes the previous chart information
             var zipCodeData = JSON.parse(localStorage.getItem("ZipCodes"));
 
@@ -412,7 +401,6 @@ var historyClicked = function() {
 //adds event listeners to each button created on the history buttons
 var putEventListeners = function(){
     var nodeList = document.getElementsByTagName("li");
-    console.log(nodeList);
     for(i=0;i<nodeList.length;i++) {
         historyBtn[i].addEventListener("click", historyClicked);
     }
@@ -430,7 +418,6 @@ $(".clear").click(function (event) {
 function onloadRequestLocalStorage() {
     var storedZips = JSON.parse(localStorage.getItem("ZipCodes"));
     if (storedZips !== null) {
-        console.log("working");
         areaCodeArray = storedZips;
     }
 }
